@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
+// @ts-ignore
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+// @ts-ignore
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { IconCheck, IconCopy } from "@tabler/icons-react";
 
@@ -54,37 +56,7 @@ export const CodeBlock = ({
     : highlightLines;
 
   return (
-    <div className="relative w-full rounded-lg bg-zinc-900 p-4 font-mono text-sm">
-      <div className="flex flex-col gap-2">
-        {tabsExist && (
-          <div className="flex  overflow-x-auto">
-            {tabs.map((tab, index) => (
-              <button
-                key={index}
-                onClick={() => setActiveTab(index)}
-                className={`px-3 !py-2 text-xs transition-colors font-sans ${
-                  activeTab === index
-                    ? "text-white"
-                    : "text-zinc-400 hover:text-zinc-200"
-                }`}
-              >
-                {tab.name}
-              </button>
-            ))}
-          </div>
-        )}
-        {!tabsExist && (
-          <div className="flex justify-between items-center py-2">
-            <div className="text-xs text-zinc-400">{filename}</div>
-            <button
-              onClick={copyToClipboard}
-              className="flex items-center gap-1 text-xs text-zinc-400 hover:text-zinc-200 transition-colors font-sans"
-            >
-              {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
-            </button>
-          </div>
-        )}
-      </div>
+    <div className="flex items-start justify-between w-full p-4 rounded-lg bg-zinc-900 font-mono text-sm max-h-[700px] overflow-y-auto">
       <SyntaxHighlighter
         language={activeLanguage}
         style={oneDark}
@@ -96,6 +68,7 @@ export const CodeBlock = ({
         }}
         wrapLines={true}
         showLineNumbers={false}
+        // @ts-ignore
         lineProps={(lineNumber) => ({
           style: {
             backgroundColor: activeHighlightLines.includes(lineNumber)
@@ -109,6 +82,15 @@ export const CodeBlock = ({
       >
         {String(activeCode)}
       </SyntaxHighlighter>
+
+      {!tabsExist && (
+        <button
+          onClick={copyToClipboard}
+          className="flex items-center text-xs text-zinc-400 hover:text-zinc-200 transition-colors font-sans p-1"
+        >
+          {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
+        </button>
+      )}
     </div>
   );
 };

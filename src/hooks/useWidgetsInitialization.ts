@@ -10,22 +10,21 @@ const useWidgetsInitialization = () => {
   const { setAllWidgets } = useWidgetStore();
 
   useEffect(() => {
-    const abortController = new AbortController();
+    // const abortController = new AbortController();
 
     const fetchWidgets = async () => {
       try {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(WIDGETS_URL, {
-          signal: abortController.signal,
-        });
+        const response = await fetch(WIDGETS_URL);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data: Widget[] = await response.json();
+
         setAllWidgets(data);
       } catch (err) {
         if (err instanceof Error) {
@@ -42,7 +41,7 @@ const useWidgetsInitialization = () => {
     fetchWidgets();
 
     return () => {
-      abortController.abort();
+      // abortController.abort();
     };
   }, []); // Empty dependency array since we only want to fetch once
 

@@ -17,7 +17,9 @@ const OptionItem = ({
   return (
     <Link href={option.value}>
       <div
-        className={`flex space-x-3 items-center px-2 py-[6px] text-white cursor-pointer rounded-lg transition ease-in-out duration-200 bg-transparent hover:bg-zinc-900`}
+        className={`flex space-x-3 items-center px-2 py-[6px] text-white cursor-pointer rounded-lg transition ease-in-out duration-200 bg-transparent hover:bg-zinc-900 ${
+          pathname?.includes(option.value) ? "bg-zinc-800" : ""
+        }`}
       >
         <p className="text-sm font-medium" key={option.value}>
           {option.label}
@@ -70,16 +72,16 @@ const LeftPanel = () => {
       options: [
         {
           label: "Introduction",
-          value: "/workspace/dashboard",
+          value: "/introduction",
         },
         {
           label: "Installation",
-          value: "/workspace/playground",
+          value: "/installation",
         },
       ],
     },
     {
-      title: "Components",
+      title: "Widgets",
       options: allWidgets.map((widget) => ({
         label: widget.label || "",
         value: `/widgets/${widget.name?.toLowerCase()}` || "",
@@ -98,10 +100,7 @@ const LeftPanel = () => {
               pathname={pathname}
             />
           ))}
-          {isLoading ? (
-            <Loading />
-          ) : // Your widgets content here
-          null}
+          {isLoading ? <Loading /> : null}
         </Suspense>
       </div>
     </nav>

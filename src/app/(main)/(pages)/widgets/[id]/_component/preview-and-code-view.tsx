@@ -32,7 +32,7 @@ export default function PreviewAndCodeView() {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="preview" className="w-full">
-        <Card className=" h-[350px]">
+        <Card className=" h-[350px] rounded">
           <iframe
             className="h-full w-full rounded-lg"
             src="https://majestic-flutter-web.web.app"

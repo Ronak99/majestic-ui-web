@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import Heading from "../_component/heading";
+import Heading from "../../../_component/heading";
 import useWidgetStore from "@/store/useWidgetStore";
 import DetailSectionView from "./_component/detail-section-view";
 import { CodeBlock } from "@/components/ui/code-block";
@@ -27,7 +27,7 @@ export default function WidgetDetail() {
       {/* Preview vs code section */}
       <DetailSectionView heading="Preview">
         <div className="flex flex-col gap-4">
-          <Card className=" h-[350px]">
+          <Card className=" h-[350px] rounded-lg">
             <iframe
               className="h-full w-full rounded-lg"
               src={`https://majestic-flutter-web.web.app/#/${selectedWidget?.name}`}
@@ -42,12 +42,12 @@ export default function WidgetDetail() {
           <CodeBlock
             language="bash"
             filename=""
-            code={"dart pub global activate magestic_cli"}
+            code={"dart pub global activate majestic_ui"}
           />
           <CodeBlock
             language="bash"
             filename=""
-            code={`magestic_cli add ${selectedWidget?.name}`}
+            code={`majestic_ui add ${selectedWidget?.name}`}
           />
         </div>
       </DetailSectionView>

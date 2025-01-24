@@ -1,71 +1,46 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+"use client";
 
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { AuroraBackground } from "@/components/ui/aurora-background";
+import { BackgroundBeams } from "@/components/ui/background-beams";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import ColourfulText from "@/components/ui/colourful-text";
+import { FlipWords } from "@/components/ui/flip-words";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import Header from "./components/header";
 
 export default function Home() {
+  const words = ["reliable", "beautiful", "functional", "tested"];
   return (
-    <div className="flex flex-col gap-4">
-      <h2>Hosting Flutter Web</h2>
-      <div className="bg-neutral-800 p-8">
-        <Card className="w-[350px]">
-          <CardHeader>
-            <CardTitle>Create project</CardTitle>
-            <CardDescription>
-              Deploy your new project in one-click.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form>
-              <div className="grid w-full items-center gap-4">
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" placeholder="Name of your project" />
-                </div>
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="framework">Framework</Label>
-                  <Select>
-                    <SelectTrigger id="framework">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent position="popper">
-                      <SelectItem value="next">Next.js</SelectItem>
-                      <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                      <SelectItem value="astro">Astro</SelectItem>
-                      <SelectItem value="nuxt">Nuxt.js</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </form>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button variant="outline">Cancel</Button>
-            <Button>Deploy</Button>
-          </CardFooter>
-        </Card>
+    <>
+      <BackgroundBeams />
 
-        {/* <iframe
-          src="https://majestic-flutter-web.web.app/"
-          height={500}
-          width={500}
-        /> */}
-      </div>
-    </div>
+      <Header showSideBorder={false} />
+
+      <motion.div
+        initial={{ opacity: 0.0, y: -10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: 0.3,
+          duration: 1,
+          ease: "easeInOut",
+        }}
+        className="flex flex-col gap-2 w-full h-screen justify-center items-center z-10"
+      >
+        <h1 className="z-10 text-lg md:text-6xl text-center font-sans font-bold mb-4">
+          Majestic UI
+        </h1>
+        <div className="max-w-2xl text-lg font-light text-muted-foreground">
+          Beautifully designed widgets that you can copy and paste into flutter
+          projects.
+          <br />
+        </div>
+        <Link href="/introduction" className="mt-12">
+          <Button className="p-6 rounded-xl bg-white/90 text-black border border-black text-md font-semibold">
+            Get Started
+          </Button>
+        </Link>
+      </motion.div>
+    </>
   );
 }
