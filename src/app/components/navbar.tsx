@@ -50,6 +50,8 @@ const SectionView = ({
 
 const LeftPanel = () => {
   const { isLoading, error } = useWidgetsInitialization();
+  const pathname = usePathname();
+  const { allWidgets } = useWidgetStore();
 
   if (error) {
     return (
@@ -60,10 +62,6 @@ const LeftPanel = () => {
       </div>
     );
   }
-
-  const pathname = usePathname();
-
-  const { allWidgets } = useWidgetStore();
 
   // Compute sections by combining static and dynamic data
   const navSections: NavSection[] = [

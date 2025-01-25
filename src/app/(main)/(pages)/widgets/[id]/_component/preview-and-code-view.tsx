@@ -1,7 +1,6 @@
 import { Card, CardHeader } from "@/components/ui/card";
 import { CodeBlock } from "@/components/ui/code-block";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Link from "next/link";
 import { useState } from "react";
 
 export default function PreviewAndCodeView({
