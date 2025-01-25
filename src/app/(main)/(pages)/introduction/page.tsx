@@ -3,7 +3,7 @@ import Heading from "../../_component/heading";
 
 export default function IntroductionPage() {
   return (
-    <div className="pb-16">
+    <>
       <Heading
         title={"Introduction"}
         subtitle={
@@ -25,6 +25,6 @@ export default function IntroductionPage() {
         implementation is quite simple and the documentation will improve over
         time.
       </p>
-    </div>
+    </>
   );
 }

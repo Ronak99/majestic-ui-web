@@ -5,7 +5,7 @@ import DetailSectionView from "../widgets/[id]/_component/detail-section-view";
 
 export default function InstallationPage() {
   return (
-    <div className="pb-16">
+    <>
       <Heading
         title={"Installation"}
         subtitle={
@@ -40,6 +40,6 @@ export default function InstallationPage() {
           </p>
         </div>
       </DetailSectionView>
-    </div>
+    </>
   );
 }

@@ -8,6 +8,7 @@ import { CodeBlock } from "@/components/ui/code-block";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
+import PreviewAndCodeView from "./_component/preview-and-code-view";
 
 export default function WidgetDetail() {
   const pathname = usePathname();
@@ -18,14 +19,16 @@ export default function WidgetDetail() {
   const selectedWidget = allWidgets.find((e) => e.name == widgetId);
 
   return (
-    <div className="pb-16">
+    <>
       <Heading
         title={selectedWidget?.label ?? ""}
         subtitle={selectedWidget?.description ?? ""}
       />
 
+      <PreviewAndCodeView selectedWidget={selectedWidget} />
+
       {/* Preview vs code section */}
-      <DetailSectionView heading="Preview">
+      {/* <DetailSectionView heading="Preview">
         <div className="flex flex-col gap-4">
           <Card className=" h-[350px] rounded-lg">
             <iframe
@@ -34,7 +37,7 @@ export default function WidgetDetail() {
             />
           </Card>
         </div>
-      </DetailSectionView>
+      </DetailSectionView> */}
 
       {/* Installation */}
       <DetailSectionView heading="Installation">
@@ -53,11 +56,19 @@ export default function WidgetDetail() {
       </DetailSectionView>
 
       {/* Usage */}
-      <DetailSectionView heading="Usage">
+      <DetailSectionView heading="Setup Manually">
         <CodeBlock
           language="dart"
           filename=""
-          code={selectedWidget?.usage ?? ""}
+          tabs={
+            selectedWidget?.files.map((file) => {
+              return {
+                name: file.name,
+                code: file.content,
+                language: "dart",
+              };
+            }) ?? []
+          }
         />
       </DetailSectionView>
 
@@ -92,6 +103,6 @@ export default function WidgetDetail() {
           )}
         </>
       </DetailSectionView>
-    </div>
+    </>
   );
 }

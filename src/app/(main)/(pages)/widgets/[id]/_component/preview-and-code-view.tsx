@@ -1,9 +1,14 @@
 import { Card, CardHeader } from "@/components/ui/card";
+import { CodeBlock } from "@/components/ui/code-block";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function PreviewAndCodeView() {
+export default function PreviewAndCodeView({
+  selectedWidget,
+}: {
+  selectedWidget?: Widget;
+}) {
   const [selectedTab, setSelectedTab] = useState<string>("preview");
 
   const onTabChange = (value: string) => {
@@ -31,17 +36,28 @@ export default function PreviewAndCodeView() {
           Code
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="preview" className="w-full">
-        <Card className=" h-[350px] rounded">
+
+      <div className="w-full relative">
+        <Card className="h-[350px] rounded-lg">
           <iframe
             className="h-full w-full rounded-lg"
-            src="https://majestic-flutter-web.web.app"
+            src={`https://majestic-flutter-web.web.app/#/${selectedWidget?.name}`}
           />
         </Card>
-      </TabsContent>
-      <TabsContent value="code">
-        <Card>Code</Card>
-      </TabsContent>
+        <Card
+          className={`absolute top-0 h-[350px] rounded-lg z-10 w-full transition-opacity duration-500 ${
+            selectedTab === "code"
+              ? "opacity-100"
+              : "opacity-0 pointer-events-none"
+          }`}
+        >
+          <CodeBlock
+            filename=""
+            code={selectedWidget?.demo ?? ""}
+            language="dart"
+          />
+        </Card>
+      </div>
     </Tabs>
   );
 }

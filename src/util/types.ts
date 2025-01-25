@@ -8,7 +8,7 @@ type Widget = {
   name: string;
   label: string;
   description: string;
-  usage: string;
+  demo: string;
   dependencies: string[];
   files: WidgetFile[];
   type: string;
