@@ -56,41 +56,63 @@ export const CodeBlock = ({
     : highlightLines;
 
   return (
-    <div className="flex items-start justify-between w-full p-4 rounded-lg bg-zinc-900 font-mono text-sm max-h-[700px] overflow-y-auto">
-      <SyntaxHighlighter
-        language={activeLanguage}
-        style={oneDark}
-        customStyle={{
-          margin: 0,
-          padding: 0,
-          background: "transparent",
-          fontSize: "0.875rem", // text-sm equivalent
-        }}
-        wrapLines={true}
-        showLineNumbers={false}
-        // @ts-ignore
-        lineProps={(lineNumber) => ({
-          style: {
-            backgroundColor: activeHighlightLines.includes(lineNumber)
-              ? "rgba(255,255,255,0.1)"
-              : "transparent",
-            display: "block",
-            width: "100%",
-          },
-        })}
-        PreTag="div"
+    <div className="h-full relative items-start justify-between w-full pb-4 rounded-lg bg-zinc-900 font-mono text-sm max-h-[375px] overflow-y-auto">
+      <button
+        className={`absolute bg-transparent hover:bg-zinc-800 transition-colors duration-300 p-2 rounded-lg ${
+          tabsExist ? "mt-[55px]" : "mt-[12px]"
+        } right-0 mr-[16px]`}
+        onClick={copyToClipboard}
       >
-        {String(activeCode)}
-      </SyntaxHighlighter>
-
-      {!tabsExist && (
-        <button
-          onClick={copyToClipboard}
-          className="flex items-center text-xs text-zinc-400 hover:text-zinc-200 transition-colors font-sans p-1"
-        >
-          {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
-        </button>
-      )}
+        {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
+      </button>
+      <div className="flex flex-col">
+        <div className="mb-4 bg-zinc-800">
+          {tabsExist && (
+            <div className="flex w-full  overflow-x-auto">
+              {tabs.map((tab, index) => (
+                <button
+                  key={index}
+                  onClick={() => setActiveTab(index)}
+                  className={`pt-2 px-4 pb-2 text-xs transition-colors font-sans ${
+                    activeTab === index
+                      ? "text-white  bg-zinc-900"
+                      : "text-zinc-400 hover:text-zinc-200 bg-zinc-800 hover:bg-zinc-700"
+                  }`}
+                >
+                  {tab.name}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="flex px-4">
+          <SyntaxHighlighter
+            language={activeLanguage}
+            style={oneDark}
+            customStyle={{
+              margin: 0,
+              padding: 0,
+              background: "transparent",
+              fontSize: "0.875rem", // text-sm equivalent
+            }}
+            wrapLines={true}
+            showLineNumbers={false}
+            // @ts-ignore
+            lineProps={(lineNumber) => ({
+              style: {
+                backgroundColor: activeHighlightLines.includes(lineNumber)
+                  ? "rgba(255,255,255,0.1)"
+                  : "transparent",
+                display: "block",
+                width: "100%",
+              },
+            })}
+            PreTag="div"
+          >
+            {String(activeCode)}
+          </SyntaxHighlighter>
+        </div>
+      </div>
     </div>
   );
 };
