@@ -90,7 +90,7 @@ const LeftPanel = () => {
   ];
 
   return (
-    <nav className="flex flex-col hidden sm:block px-4 py-6 border-r h-full">
+    <nav className="flex flex-col hidden md:block pr-4 py-6 border-r h-full">
       <div className="flex flex-col gap-8">
         <Suspense fallback={<Loading />}>
           {navSections.map((section) => (

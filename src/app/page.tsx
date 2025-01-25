@@ -25,18 +25,18 @@ export default function Home() {
           duration: 1,
           ease: "easeInOut",
         }}
-        className="flex flex-col gap-2 w-full h-screen justify-center items-center z-10"
+        className="flex flex-col gap-2 w-full h-screen justify-center items-center z-10 p-8"
       >
-        <h1 className="z-10 text-lg md:text-6xl text-center font-sans font-bold mb-4">
+        <h1 className="z-10 text-5xl md:text-6xl text-center font-sans font-bold mb-4">
           Majestic UI
         </h1>
-        <div className="max-w-2xl text-lg font-light text-muted-foreground">
+        <div className="max-w-2xl text-lg font-light text-muted-foreground text-center">
           Beautifully designed widgets that you can copy and paste into flutter
           projects.
           <br />
         </div>
         <Link href="/introduction" className="mt-12">
-          <Button className="p-6 rounded-xl bg-white/90 text-black border border-black text-md font-semibold">
+          <Button className="md:p-6 px-24 py-6 rounded-xl bg-white/90 text-black border border-black text-md font-semibold">
             Get Started
           </Button>
         </Link>

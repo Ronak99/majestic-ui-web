@@ -1,20 +1,34 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import Menu from "./menu-button";
+import MenuButton from "./menu-button";
 
 type Props = {
   showSideBorder: boolean;
 };
 
 export default function Header({ showSideBorder = true }: Props) {
+  const pathname = usePathname();
+
   return (
     <header className="border-grid sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div
-        className={`w-full m-auto lg:max-w-[1536px] p-5 border-l border-r flex justify-between ${
-          showSideBorder ? "" : "border-transparent"
+        className={`w-full m-auto lg:max-w-[1536px] py-3 px-5 border-l border-r flex justify-between ${
+          showSideBorder ? "xl:border-zinc-800" : "border-transparent"
         }`}
       >
-        <div className="flex items-center gap-8">
-          <Link className="flex items-center  gap-2" href={"/"}>
+        <div className="flex w-full items-center gap-8">
+          <div className="absolute block md:hidden z-10">
+            <MenuButton />
+          </div>
+          <Link
+            className="flex max-md:flex-grow justify-center items-center  gap-2"
+            href={"/"}
+          >
             <Image
               src="/logo.svg"
               alt="Majestic UI Logo"
@@ -25,7 +39,7 @@ export default function Header({ showSideBorder = true }: Props) {
               majestic-ui
             </span>
           </Link>
-          <div className="gap-4 flex">
+          <div className="gap-4 flex hidden md:block">
             {[
               { label: "Docs", value: "introduction" },
               { label: "Widgets", value: "widgets" },
@@ -33,17 +47,15 @@ export default function Header({ showSideBorder = true }: Props) {
               <Link
                 href={`/${e.value}`}
                 key={e.value}
-                className="text-muted-foreground text-md"
+                className={`text-muted-foreground hover:text-white text-sm ${
+                  pathname.includes(e.value) ? "text-white" : ""
+                }`}
               >
                 {e.label}
               </Link>
             ))}
           </div>
         </div>
-        {/* <div className="flex">
-          <p>Input</p>
-          <div>github</div>
-        </div> */}
       </div>
     </header>
   );

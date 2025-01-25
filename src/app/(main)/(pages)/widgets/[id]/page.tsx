@@ -27,18 +27,6 @@ export default function WidgetDetail() {
 
       <PreviewAndCodeView selectedWidget={selectedWidget} />
 
-      {/* Preview vs code section */}
-      {/* <DetailSectionView heading="Preview">
-        <div className="flex flex-col gap-4">
-          <Card className=" h-[350px] rounded-lg">
-            <iframe
-              className="h-full w-full rounded-lg"
-              src={`https://majestic-flutter-web.web.app/#/${selectedWidget?.name}`}
-            />
-          </Card>
-        </div>
-      </DetailSectionView> */}
-
       {/* Installation */}
       <DetailSectionView heading="Installation">
         <div className="flex flex-col gap-4">
