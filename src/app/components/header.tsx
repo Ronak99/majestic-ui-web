@@ -39,7 +39,7 @@ export default function Header({ showSideBorder = true }: Props) {
               majestic-ui
             </span>
           </Link>
-          <div className="gap-4 flex hidden md:block">
+          <div className="flex gap-4 hidden md:flex">
             {[
               { label: "Docs", value: "introduction" },
               { label: "Widgets", value: "widgets" },
