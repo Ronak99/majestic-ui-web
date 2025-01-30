@@ -56,7 +56,7 @@ export const CodeBlock = ({
     : highlightLines;
 
   return (
-    <div className="h-full relative items-start justify-between w-full pb-4 rounded-lg bg-zinc-900 font-mono text-sm max-h-[500px] overflow-y-auto">
+    <div className="h-full relative items-start justify-between w-full pb-4 rounded-lg bg-zinc-900 font-mono text-sm max-h-[720px] overflow-y-auto">
       <button
         className={`absolute bg-transparent hover:bg-zinc-800 transition-colors duration-300 p-2 rounded-lg ${
           tabsExist ? "mt-[55px]" : "mt-[12px]"

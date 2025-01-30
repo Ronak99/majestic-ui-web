@@ -14,11 +14,7 @@ export default function PreviewAndCodeView({
     setSelectedTab(value);
   };
 
-  let viewHeight = "h-[350px]";
-
-  if (selectedWidget?.name === "user_feed") {
-    viewHeight = "h-[500px]";
-  }
+  let viewDimensions = "h-[720px]";
 
   return (
     <Tabs
@@ -42,15 +38,15 @@ export default function PreviewAndCodeView({
         </TabsTrigger>
       </TabsList>
 
-      <div className="w-full relative">
-        <Card className={`${viewHeight} rounded-lg`}>
+      <div className="w-full relative flex justify-center items-center">
+        <Card className={`${viewDimensions}  w-[480px] rounded-lg`}>
           <iframe
             className="h-full w-full rounded-lg"
             src={`https://majestic-flutter-web.web.app/#/${selectedWidget?.name}`}
           />
         </Card>
         <Card
-          className={`absolute top-0 rounded-lg z-10 w-full transition-opacity duration-500 ${viewHeight} ${
+          className={`absolute top-0 rounded-lg z-10 w-full transition-opacity duration-500  ${viewDimensions} ${
             selectedTab === "code"
               ? "opacity-100"
               : "opacity-0 pointer-events-none"
