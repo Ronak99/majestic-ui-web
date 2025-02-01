@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Majetic UI",
+  title: "Majestic UI",
   description: "Beautifully designed Flutter Widgets.",
 };
 
