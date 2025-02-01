@@ -31,7 +31,7 @@ export default function Home() {
         </h1>
         <div className="max-w-2xl text-lg font-light text-muted-foreground text-center">
           Beautifully designed Flutter widgets that you can copy and paste into
-          flutter projects.
+          your projects.
           <br />
         </div>
         <Link href="/introduction" className="mt-12">
