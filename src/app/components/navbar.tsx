@@ -85,6 +85,15 @@ const LeftPanel = () => {
         value: `/widgets/${widget.name?.toLowerCase()}` || "",
       })),
     },
+    {
+      title: "More",
+      options: [
+        {
+          label: "Request a widget",
+          value: "/request",
+        },
+      ],
+    },
   ];
 
   return (

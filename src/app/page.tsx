@@ -25,7 +25,7 @@ export default function Home() {
           duration: 1,
           ease: "easeInOut",
         }}
-        className="flex flex-col gap-2 w-full h-screen justify-center items-center z-10 p-8"
+        className="flex-grow flex flex-col gap-2 w-full justify-center items-center z-10 p-8"
       >
         <h1 className="z-10 text-5xl md:text-6xl text-center font-sans font-bold mb-4">
           Majestic UI
