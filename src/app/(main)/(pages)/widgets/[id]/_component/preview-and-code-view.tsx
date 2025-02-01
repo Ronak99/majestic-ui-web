@@ -14,7 +14,7 @@ export default function PreviewAndCodeView({
     setSelectedTab(value);
   };
 
-  let viewDimensions = "h-[720px]";
+  const viewDimensions = "h-[720px]";
 
   return (
     <Tabs
