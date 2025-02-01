@@ -1,19 +1,17 @@
 "use client";
 
-import { AuroraBackground } from "@/components/ui/aurora-background";
 import { BackgroundBeams } from "@/components/ui/background-beams";
 import { Button } from "@/components/ui/button";
-import ColourfulText from "@/components/ui/colourful-text";
-import { FlipWords } from "@/components/ui/flip-words";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Header from "./components/header";
+import Image from "next/image";
 
 export default function Home() {
   const words = ["reliable", "beautiful", "functional", "tested"];
   return (
     <>
-      <BackgroundBeams />
+      {/* <BackgroundBeams /> */}
 
       <Header showSideBorder={false} />
 
@@ -27,12 +25,13 @@ export default function Home() {
         }}
         className="flex-grow flex flex-col gap-2 w-full justify-center items-center z-10 p-8"
       >
+        <Image src="/layers-colored.png" alt="" height={80} width={80} />
         <h1 className="z-10 text-5xl md:text-6xl text-center font-sans font-bold mb-4">
           Majestic UI
         </h1>
         <div className="max-w-2xl text-lg font-light text-muted-foreground text-center">
-          Beautifully designed widgets that you can copy and paste into flutter
-          projects.
+          Beautifully designed Flutter widgets that you can copy and paste into
+          flutter projects.
           <br />
         </div>
         <Link href="/introduction" className="mt-12">

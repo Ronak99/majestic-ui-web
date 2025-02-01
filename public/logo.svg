@@ -1,6 +1,55 @@
-<svg width="108" height="108" viewBox="0 0 108 108" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="50" height="50" rx="6" fill="white"/>
-<rect y="58" width="50" height="50" rx="6" fill="white"/>
-<rect x="58" y="58" width="50" height="50" rx="6" fill="white"/>
-<rect x="58" width="50" height="50" rx="25" fill="white"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Top layer -->
+  <path d="M15 30 
+           Q15 28, 17 27
+           L48 15
+           Q50 14, 52 15
+           L83 27
+           Q85 28, 85 30
+           L85 30
+           Q85 32, 83 33
+           L52 45
+           Q50 46, 48 45
+           L17 33
+           Q15 32, 15 30
+           Z" 
+        fill="none" 
+        stroke="black" 
+        stroke-width="3"/>
+  
+  <!-- Middle layer -->
+  <path d="M15 45
+           Q15 43, 17 42
+           L48 30
+           Q50 29, 52 30
+           L83 42
+           Q85 43, 85 45
+           L85 45
+           Q85 47, 83 48
+           L52 60
+           Q50 61, 48 60
+           L17 48
+           Q15 47, 15 45
+           Z" 
+        fill="none" 
+        stroke="black" 
+        stroke-width="3"/>
+  
+  <!-- Bottom layer -->
+  <path d="M15 60
+           Q15 58, 17 57
+           L48 45
+           Q50 44, 52 45
+           L83 57
+           Q85 58, 85 60
+           L85 60
+           Q85 62, 83 63
+           L52 75
+           Q50 76, 48 75
+           L17 63
+           Q15 62, 15 60
+           Z" 
+        fill="none" 
+        stroke="black" 
+        stroke-width="3"/>
 </svg>

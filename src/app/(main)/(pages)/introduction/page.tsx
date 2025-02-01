@@ -7,7 +7,7 @@ export default function IntroductionPage() {
       <Heading
         title={"Introduction"}
         subtitle={
-          "Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source."
+          "Beautifully designed Flutter widgets that you can copy and paste into your apps. Accessible. Customizable. Open Source."
         }
       />
       <p className="pt-12 max-w-[750px]">

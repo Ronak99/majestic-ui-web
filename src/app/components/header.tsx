@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Menu from "./menu-button";
+import { Layers } from "lucide-react";
 import MenuButton from "./menu-button";
 
 type Props = {
@@ -29,12 +29,7 @@ export default function Header({ showSideBorder = true }: Props) {
             className="flex max-md:flex-grow justify-center items-center  gap-2"
             href={"/"}
           >
-            <Image
-              src="/logo.svg"
-              alt="Majestic UI Logo"
-              width={18}
-              height={18}
-            />
+            <Layers width={18} height={18} />
             <span className="tracking-tight text-lg font-bold">
               majestic-ui
             </span>
