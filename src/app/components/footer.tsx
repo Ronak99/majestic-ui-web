@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="text-center text-sm leading-loose text-muted-foreground">
         Built by{" "}
         <Link
-          href="https://ronakpunase.dev"
+          href="https://ronak99.github.io/portfolio/"
           target="_blank"
           className="underline underline-offset-4"
         >
