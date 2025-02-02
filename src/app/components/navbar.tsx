@@ -78,13 +78,18 @@ const LeftPanel = () => {
         },
       ],
     },
-    {
-      title: "Widgets",
-      options: allWidgets.map((widget) => ({
-        label: widget.label || "",
-        value: `/widgets/${widget.name?.toLowerCase()}` || "",
-      })),
-    },
+    ...Array.from(new Set(allWidgets.map((widget) => widget.type))).map(
+      (type) => ({
+        title: type.charAt(0).toUpperCase() + type.slice(1) + "s",
+        options: allWidgets
+          .filter((widget) => widget.type === type)
+          .map((widget) => ({
+            label: widget.label || "",
+            value: `/widgets/${widget.name?.toLowerCase()}` || "",
+          })),
+      })
+    ),
+
     {
       title: "More",
       options: [
