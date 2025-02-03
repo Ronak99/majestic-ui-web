@@ -6,6 +6,7 @@ import useWidgetsInitialization from "@/hooks/useWidgetsInitialization";
 import Header from "./components/header";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
+import DataLoader from "./components/data-loader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,6 +41,7 @@ export default function RootLayout({
         >
           <div className="flex flex-col min-h-svh bg-background">
             {children}
+            <DataLoader />
             <Footer />
           </div>
         </ThemeProvider>

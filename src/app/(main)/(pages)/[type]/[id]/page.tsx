@@ -9,12 +9,17 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import PreviewAndCodeView from "./_component/preview-and-code-view";
+import Loading from "@/app/components/loading";
 
 export default function WidgetDetail() {
   const pathname = usePathname();
   const widgetId = pathname.split("/").pop();
 
   const { allWidgets } = useWidgetStore();
+
+  if (!allWidgets.length) {
+    return <Loading />;
+  }
 
   const selectedWidget = allWidgets.find((e) => e.name == widgetId);
 

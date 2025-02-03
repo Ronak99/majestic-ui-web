@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Heading from "../../_component/heading";
+import { Button } from "@/components/ui/button";
+import { IconChevronRight } from "@tabler/icons-react";
 
 export default function IntroductionPage() {
   return (

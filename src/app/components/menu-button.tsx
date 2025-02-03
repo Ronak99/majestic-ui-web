@@ -32,18 +32,31 @@ export default function MenuButton() {
         },
       ],
     },
+    ...Array.from(new Set(allWidgets.map((widget) => widget.type))).map(
+      (type) => ({
+        title: type.charAt(0).toUpperCase() + type.slice(1) + "s",
+        options: allWidgets
+          .filter((widget) => widget.type === type)
+          .map((widget) => ({
+            label: widget.label || "",
+            value: `/${type + "s"}/${widget.name?.toLowerCase()}` || "",
+          })),
+      })
+    ),
     {
-      title: "Widgets",
-      options: allWidgets.map((widget) => ({
-        label: widget.label || "",
-        value: `/widgets/${widget.name?.toLowerCase()}` || "",
-      })),
+      title: "More",
+      options: [
+        {
+          label: "Request a widget",
+          value: "/request",
+        },
+      ],
     },
   ];
   return (
     <Drawer>
-      <DrawerTrigger>
-        <Button variant={"ghost"} size={"icon"}>
+      <DrawerTrigger className="flex items-center">
+        <div className="cursor-pointer hover:bg-neutral-800 py-1 px-2 rounded-lg">
           <Image
             src="/menu.svg"
             alt="Menu"
@@ -51,7 +64,7 @@ export default function MenuButton() {
             height={24}
             className="dark:invert"
           />
-        </Button>
+        </div>
       </DrawerTrigger>
       <DrawerContent className="p-4 gap-6 mb-4">
         {navSections.map((e) => {

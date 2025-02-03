@@ -38,6 +38,7 @@ export default function Header({ showSideBorder = true }: Props) {
             {[
               { label: "Docs", value: "introduction" },
               { label: "Widgets", value: "widgets" },
+              { label: "Pages", value: "pages" },
             ].map((e) => (
               <Link
                 href={`/${e.value}`}

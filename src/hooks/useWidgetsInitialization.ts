@@ -5,18 +5,14 @@ const WIDGETS_URL =
   "https://raw.githubusercontent.com/Ronak99/majestic-ui-flutter/refs/heads/master/all_widgets.json";
 
 const useWidgetsInitialization = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-  const { setAllWidgets } = useWidgetStore();
+  const { allWidgets, setAllWidgets } = useWidgetStore();
 
   useEffect(() => {
     // const abortController = new AbortController();
 
     const fetchWidgets = async () => {
+      if (allWidgets.length) return;
       try {
-        setIsLoading(true);
-        setError(null);
-
         const response = await fetch(WIDGETS_URL);
 
         if (!response.ok) {
@@ -28,13 +24,10 @@ const useWidgetsInitialization = () => {
         setAllWidgets(data);
       } catch (err) {
         if (err instanceof Error) {
-          setError(err);
         } else {
-          setError(new Error("An unknown error occurred"));
         }
         console.error("Failed to fetch widgets:", err);
       } finally {
-        setIsLoading(false);
       }
     };
 
@@ -45,7 +38,7 @@ const useWidgetsInitialization = () => {
     };
   }, []); // Empty dependency array since we only want to fetch once
 
-  return { isLoading, error };
+  return {};
 };
 
 export default useWidgetsInitialization;

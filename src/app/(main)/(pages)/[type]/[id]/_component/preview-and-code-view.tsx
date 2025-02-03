@@ -39,10 +39,12 @@ export default function PreviewAndCodeView({
       </TabsList>
 
       <div className="w-full relative flex justify-center items-center">
-        <Card className={`${viewDimensions}  w-[480px] rounded-lg`}>
+        <Card className={`${viewDimensions}  w-[380px] rounded-lg`}>
           <iframe
             className="h-full w-full rounded-lg"
-            src={`https://majestic-flutter-web.web.app/#/${selectedWidget?.name}`}
+            src={`https://majestic-flutter-web.web.app/#/${
+              selectedWidget!.name
+            }`}
           />
         </Card>
         <Card
