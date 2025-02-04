@@ -36,15 +36,19 @@ export default function Header({ showSideBorder = true }: Props) {
           </Link>
           <div className="flex gap-4 hidden md:flex">
             {[
-              { label: "Docs", value: "introduction" },
-              { label: "Widgets", value: "widgets" },
-              { label: "Pages", value: "pages" },
+              { label: "Docs", root: "introduction", link: "introduction" },
+              {
+                label: "Widgets",
+                root: "widgets",
+                link: "widgets/star_rush_background",
+              },
+              { label: "Pages", root: "pages", link: "pages/profile_page" },
             ].map((e) => (
               <Link
-                href={`/${e.value}`}
-                key={e.value}
+                href={`/${e.link}`}
+                key={e.root}
                 className={`text-muted-foreground hover:text-white text-sm ${
-                  pathname.includes(e.value) ? "text-white" : ""
+                  pathname.includes(e.root) ? "text-white" : ""
                 }`}
               >
                 {e.label}

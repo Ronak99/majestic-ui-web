@@ -13,19 +13,18 @@ export default function IntroductionPage() {
         }
       />
       <p className="pt-12 max-w-[750px]">
-        Majestic UI consists of widgets that are either regularly used but their
-        implementation is tedious or some complex widgets such as the{" "}
-        <Link href="/widgets/user_feed" className="underline">
-          user_feed
-        </Link>
-        .
+        Majestic UI is a collection regularly used pages or complex widgets that
+        can help beautify your applicaition.
       </p>
       <p className="pt-4 max-w-[750px]">
         The idea is simple, instead of adding everything as a package, what if
-        these widgets can be added to the package on your own. The code you
-        import from majestic ui is yours to modify, that is why the
-        implementation is quite simple and the documentation will improve over
-        time.
+        you could{" "}
+        <span className="bg-amber-800/50 font-semibold">
+          import Flutter code directly in your project
+        </span>
+        . The code you import from majestic ui is yours to modify, that is why
+        the implementation is quite simple and the documentation will improve
+        over time.
       </p>
     </>
   );

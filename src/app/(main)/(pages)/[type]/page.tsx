@@ -1,7 +1,13 @@
 "use client";
 
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 
 export default function Page() {
-  redirect("/widgets/star_rush_background");
+  const pathname = usePathname();
+
+  if (pathname.includes("pages")) {
+    redirect("/pages/profile_page");
+  } else {
+    redirect("/widgets/star_rush_background");
+  }
 }
