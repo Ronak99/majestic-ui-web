@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Heading from "../../_component/heading";
-import { CodeBlock } from "@/components/ui/code-block";
-import DetailSectionView from "../widgets/[id]/_component/detail-section-view";
+import DetailSectionView from "../[type]/[id]/_component/detail-section-view";
 
 export default function InstallationPage() {
   return (
