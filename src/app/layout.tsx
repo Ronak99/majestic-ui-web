@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     siteName: "https://www.majesticui.com",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Majestic UI",
     description:
       "Beautifully designed Flutter widgets that you can copy and paste into your apps. Accessible. Customizable. Open Source.",
