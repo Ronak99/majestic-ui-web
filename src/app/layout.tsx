@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
-import useWidgetsInitialization from "@/hooks/useWidgetsInitialization";
-import Header from "./components/header";
-import Navbar from "./components/navbar";
+import { Analytics } from "@vercel/analytics/react";
 import Footer from "./components/footer";
 import DataLoader from "./components/data-loader";
 
@@ -59,6 +57,7 @@ export default function RootLayout({
         >
           <div className="flex flex-col min-h-svh bg-background">
             {children}
+            <Analytics />
             <DataLoader />
             <Footer />
           </div>
