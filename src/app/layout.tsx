@@ -21,6 +21,24 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Majestic UI",
   description: "Beautifully designed Flutter Widgets.",
+  keywords: ["majestic ui", "flutter", "android", "ios"],
+  openGraph: {
+    images: ["/majestic-ui.png"],
+    title: "Majestic UI",
+    description:
+      "Beautifully designed Flutter widgets that you can copy and paste into your apps. Accessible. Customizable. Open Source.",
+    siteName: "https://www.majesticui.com",
+  },
+  twitter: {
+    card: "summary",
+    title: "Majestic UI",
+    description:
+      "Beautifully designed Flutter widgets that you can copy and paste into your apps. Accessible. Customizable. Open Source.",
+    site: "https://www.majesticui.com",
+    creator: "Ronak99",
+    creatorId: "https://x.com/The_RonakPunase",
+    images: ["/majestic-ui.png"],
+  },
 };
 
 export default function RootLayout({
