@@ -15,19 +15,27 @@ export default function InstallationPage() {
         <p className="max-w-[750px]">
           Hit me up on{" "}
           <Link
-            href={""}
+            href={"https://x.com/The_RonakPunase"}
             target="_blank"
             className="underline underline-offset-4 text-muted-foreground"
           >
             Twitter
           </Link>{" "}
-          or{" "}
+          ,{" "}
           <Link
-            href={""}
+            href={"https://www.linkedin.com/in/ronak-punase/"}
             target="_blank"
             className="inline-flex gap-1 items-center underline underline-offset-4 text-muted-foreground"
           >
             LinkedIn
+          </Link>
+          {" or "}
+          <Link
+            href={"https://discord.com/invite/Kze5FUa6fx"}
+            target="_blank"
+            className="inline-flex gap-1 items-center underline underline-offset-4 text-muted-foreground"
+          >
+            Discord
           </Link>{" "}
           and share your thoughts about this website or an idea of a widget that
           you would want to see on here.
