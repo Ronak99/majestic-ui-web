@@ -6,7 +6,8 @@ export default function InstallationPage() {
   return (
     <>
       <Heading
-        title={"Request a widget"}
+        currentTitle="Request a widget"
+        previousTitle="Request a widget"
         subtitle={
           "Reach out to me and share a widget idea that you would like me to host on this platform."
         }

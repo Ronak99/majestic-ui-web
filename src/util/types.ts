@@ -1,15 +1,22 @@
-type WidgetFile = {
+type Content = {
   name: string;
   dir: string;
   content: string;
 };
 
-type Widget = {
+type Component = {
   name: string;
   label: string;
   description: string;
-  demo: string;
   dependencies: string[];
-  files: WidgetFile[];
+  demo: string;
+  files: Content[];
+};
+
+type RegistryItem = {
+  name: string;
+  label: string;
   type: string;
+  author: string;
+  github: string;
 };

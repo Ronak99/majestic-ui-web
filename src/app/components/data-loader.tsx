@@ -1,9 +1,9 @@
 "use client";
 
-import useWidgetsInitialization from "@/hooks/useWidgetsInitialization";
+import useInitializeRegistry from "@/hooks/useInitializeRegistry";
 
 export default function DataLoader() {
-  const {} = useWidgetsInitialization();
+  const {} = useInitializeRegistry();
 
   return <div></div>;
 }

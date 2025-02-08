@@ -6,19 +6,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Layers } from "lucide-react";
 import MenuButton from "./menu-button";
+import AuthButton from "./auth-button";
 
-type Props = {
-  showSideBorder: boolean;
-};
-
-export default function Header({ showSideBorder = true }: Props) {
+export default function Header() {
   const pathname = usePathname();
 
   return (
     <header className="border-grid sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div
         className={`w-full m-auto lg:max-w-[1536px] py-3 px-5 border-l border-r flex justify-between ${
-          showSideBorder ? "xl:border-zinc-800" : "border-transparent"
+          pathname.split("/").pop()?.length
+            ? "xl:border-zinc-800"
+            : "border-transparent"
         }`}
       >
         <div className="flex w-full items-center gap-8">
@@ -56,6 +55,7 @@ export default function Header({ showSideBorder = true }: Props) {
             ))}
           </div>
         </div>
+        <AuthButton />
       </div>
     </header>
   );

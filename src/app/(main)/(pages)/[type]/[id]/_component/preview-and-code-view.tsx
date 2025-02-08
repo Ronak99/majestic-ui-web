@@ -4,9 +4,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 
 export default function PreviewAndCodeView({
-  selectedWidget,
+  selectedComponent,
 }: {
-  selectedWidget?: Widget;
+  selectedComponent?: Component;
 }) {
   const [selectedTab, setSelectedTab] = useState<string>("preview");
 
@@ -43,7 +43,7 @@ export default function PreviewAndCodeView({
           <iframe
             className="h-full w-full rounded-[60px]"
             src={`https://majestic-flutter-web.web.app/#/${
-              selectedWidget!.name
+              selectedComponent!.name
             }`}
           />
         </Card>
@@ -56,7 +56,7 @@ export default function PreviewAndCodeView({
         >
           <CodeBlock
             filename=""
-            code={selectedWidget?.demo ?? ""}
+            code={selectedComponent?.demo ?? ""}
             language="dart"
           />
         </Card>

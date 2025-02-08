@@ -13,8 +13,6 @@ export default function Home() {
     <>
       <BackgroundBeams />
 
-      <Header showSideBorder={false} />
-
       <motion.div
         initial={{ opacity: 0.0, y: -10 }}
         whileInView={{ opacity: 1, y: 0 }}

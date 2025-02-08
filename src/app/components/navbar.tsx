@@ -1,12 +1,13 @@
 "use client";
-import useWidgetsInitialization from "@/hooks/useWidgetsInitialization";
-import useWidgetStore from "@/store/useWidgetStore";
+import useInitializeRegistry from "@/hooks/useInitializeRegistry";
+import useWidgetStore from "@/store/useRegistry";
 import { NavOption, NavSection } from "@/util/constants";
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Loading from "./loading";
+import useRegistry from "@/store/useRegistry";
 
 const OptionItem = ({
   option,
@@ -63,11 +64,11 @@ const SectionView = ({
 
 const LeftPanel = () => {
   const pathname = usePathname();
-  const { allWidgets } = useWidgetStore();
+  const { registry } = useRegistry();
   const [animatedSections, setAnimatedSections] = useState<NavSection[]>([]);
 
   useEffect(() => {
-    if (allWidgets.length > 0) {
+    if (registry.length > 0) {
       const newNavSections: NavSection[] = [
         {
           title: "Getting Started",
@@ -82,11 +83,11 @@ const LeftPanel = () => {
             },
           ],
         },
-        ...Array.from(new Set(allWidgets.map((widget) => widget.type))).map(
+        ...Array.from(new Set(registry.map((item) => item.type))).map(
           (type) => ({
             title: type.charAt(0).toUpperCase() + type.slice(1) + "s",
-            options: allWidgets
-              .filter((widget) => widget.type === type)
+            options: registry
+              .filter((item) => item.type === type)
               .map((widget) => ({
                 label: widget.label || "",
                 value: `/${type + "s"}/${widget.name?.toLowerCase()}` || "",
@@ -128,7 +129,7 @@ const LeftPanel = () => {
       setAnimatedSections([]);
       revealSections();
     }
-  }, [allWidgets]);
+  }, [registry]);
 
   return (
     <nav className="flex flex-col hidden md:block pr-4 py-6 border-r h-full">
