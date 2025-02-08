@@ -12,9 +12,9 @@ export default function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="border-grid sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="border-grid sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-[60px]">
       <div
-        className={`w-full m-auto lg:max-w-[1536px] py-3 px-5 border-l border-r flex justify-between ${
+        className={`w-full h-full m-auto lg:max-w-[1536px] py-3 px-5 border-l border-r flex justify-between items-center ${
           pathname.split("/").pop()?.length
             ? "xl:border-zinc-800"
             : "border-transparent"

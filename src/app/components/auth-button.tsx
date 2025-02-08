@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getUser, signInWithGithub } from "@/actions/auth";
+import { getUser, signInWithGithub, signOut } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase/client";
 import { User } from "@supabase/supabase-js";
+import { createUser } from "@/actions/user";
 
 export default function AuthButton() {
   const [user, setUser] = useState<User | null>(null);
@@ -29,6 +30,9 @@ export default function AuthButton() {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        createUser(session?.user);
+      }
       setUser(session?.user ?? null);
     });
 
@@ -42,16 +46,26 @@ export default function AuthButton() {
 
   if (user) {
     return (
-      <div className="flex items-center gap-2">
-        {user.user_metadata?.avatar_url && (
-          <img
-            src={user.user_metadata.avatar_url}
-            alt="User avatar"
-            className="h-8 w-8 rounded-full"
-          />
-        )}
-        <p className="text-sm">{user.user_metadata?.user_name}</p>
-      </div>
+      <Button
+        variant={"ghost"}
+        className="rounded-md h-full"
+        onClick={() => {
+          signOut();
+        }}
+      >
+        <div className="flex items-center gap-2">
+          {user.user_metadata?.avatar_url && (
+            <img
+              src={user.user_metadata.avatar_url}
+              alt="User avatar"
+              className="h-[25px] w-[25px] rounded-full"
+            />
+          )}
+          <p className="font-semibold text-sm">
+            {user.user_metadata?.user_name}
+          </p>
+        </div>
+      </Button>
     );
   }
 

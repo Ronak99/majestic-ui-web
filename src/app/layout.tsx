@@ -59,7 +59,7 @@ export default function RootLayout({
           <div className="flex flex-col min-h-svh bg-background">
             <Header />
             {children}
-            <Analytics />
+            {/* <Analytics /> */}
             <DataLoader />
             <Footer />
           </div>
