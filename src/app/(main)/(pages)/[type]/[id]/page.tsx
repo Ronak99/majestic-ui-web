@@ -1,13 +1,10 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import Heading from "../../../_component/heading";
-import useWidgetStore from "@/store/useRegistry";
 import DetailSectionView from "./_component/detail-section-view";
 import { CodeBlock } from "@/components/ui/code-block";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { Card } from "@/components/ui/card";
 import PreviewAndCodeView from "./_component/preview-and-code-view";
 import Loading from "@/app/components/loading";
 import {
@@ -15,9 +12,7 @@ import {
   InvalidComponentNameError,
   useRegistryContent,
 } from "@/hooks/useRegistryContent";
-import useTitleHistory from "@/store/useTitleHistory";
 import { ContentFile, RegistryContent } from "@/util/types";
-import { DependencyList } from "react";
 
 export default function WidgetDetail() {
   const { status, data: component, error } = useRegistryContent();
