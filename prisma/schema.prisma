@@ -39,4 +39,17 @@ model registry {
   author     users            @relation(fields: [authorId], references: [uid])
   created_at DateTime         @default(now())
   updated_at DateTime         @default(now())
+  content    content?
+}
+
+model content {
+  id           Int      @id @default(autoincrement())
+  name         String   @unique
+  registry     registry @relation(fields: [name], references: [name])
+  label        String   @unique
+  description  String
+  dependencies Json
+  demo         Json
+  files        Json
+  created_at   DateTime @default(now())
 }

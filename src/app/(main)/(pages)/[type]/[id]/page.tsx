@@ -13,18 +13,14 @@ import Loading from "@/app/components/loading";
 import {
   ComponentNotFoundError,
   InvalidComponentNameError,
-  useGetComponent,
-} from "@/hooks/useQueryWidget";
+  useRegistryContent,
+} from "@/hooks/useRegistryContent";
 import useTitleHistory from "@/store/useTitleHistory";
+import { ContentFile, RegistryContent } from "@/util/types";
+import { DependencyList } from "react";
 
 export default function WidgetDetail() {
-  const {
-    status,
-    data: component,
-    error,
-    currentTitle,
-    prevTitle,
-  } = useGetComponent();
+  const { status, data: component, error } = useRegistryContent();
 
   if (status === "error" && !component) {
     if (error instanceof ComponentNotFoundError) {
@@ -44,7 +40,7 @@ export default function WidgetDetail() {
     return component && <RenderComponent component={component} />;
 }
 
-function RenderComponent({ component }: { component: Component }) {
+function RenderComponent({ component }: { component: RegistryContent }) {
   return (
     <>
       <Heading
@@ -77,7 +73,7 @@ function RenderComponent({ component }: { component: Component }) {
           language="dart"
           filename=""
           tabs={
-            component?.files.map((file) => {
+            (component.files as ContentFile[]).map((file) => {
               return {
                 name: file.name,
                 code: file.content,
@@ -91,10 +87,11 @@ function RenderComponent({ component }: { component: Component }) {
       {/* Dependencies */}
       <DetailSectionView heading="Dependencies">
         <>
-          {component?.dependencies && component?.dependencies.length ? (
+          {component?.dependencies &&
+          (component?.dependencies as string[]).length ? (
             <div className="flex flex-col gap-4">
               <div className="flex flex-row gap-4">
-                {component?.dependencies.map((dep) => (
+                {(component?.dependencies as string[]).map((dep) => (
                   <Link
                     key={dep}
                     href={`https://pub.dev/packages/${dep}`}

@@ -11,7 +11,7 @@ export default function Home() {
   const words = ["reliable", "beautiful", "functional", "tested"];
   return (
     <>
-      <BackgroundBeams />
+      {/* <BackgroundBeams /> */}
 
       <motion.div
         initial={{ opacity: 0.0, y: -10 }}

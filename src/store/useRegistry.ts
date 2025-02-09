@@ -1,27 +1,29 @@
 import { create } from "zustand";
+import { PrismaClient, Prisma } from "@prisma/client";
+import { RegistryContent, RegistryItem } from "@/util/types";
 
 interface RegistryState {
   registry: RegistryItem[];
   setAllRegitryItems: (data: RegistryItem[]) => void;
 
-  componentCache: Record<string, Component>;
-  getComponent: (name: string) => Component | undefined;
-  addToComponentCache: (component: Component) => void;
+  registryContentCache: Record<string, RegistryContent>;
+  getRegistryContent: (name: string) => RegistryContent | undefined;
+  addToRegistryContentCache: (content: RegistryContent) => void;
 }
 
 const useRegistry = create<RegistryState>()((set, get) => ({
   registry: [],
-  componentCache: {},
+  registryContentCache: {},
 
   setAllRegitryItems: (data: RegistryItem[]) => set({ registry: data }),
 
-  getComponent: (name: string) => get().componentCache[name],
+  getRegistryContent: (name: string) => get().registryContentCache[name],
 
-  addToComponentCache: (component: Component) =>
+  addToRegistryContentCache: (content: RegistryContent) =>
     set((state) => ({
-      componentCache: {
-        ...state.componentCache,
-        [component.name]: component,
+      registryContentCache: {
+        ...state.registryContentCache,
+        [content.name]: content,
       },
     })),
 }));
