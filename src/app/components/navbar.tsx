@@ -85,7 +85,8 @@ const LeftPanel = () => {
         },
         ...Array.from(new Set(registry.map((item) => item.type))).map(
           (type) => ({
-            title: type.charAt(0).toUpperCase() + type.slice(1) + "s",
+            title:
+              type.charAt(0).toUpperCase() + type.slice(1).toLowerCase() + "s",
             options: registry
               .filter((item) => item.type === type)
               .map((widget) => ({
