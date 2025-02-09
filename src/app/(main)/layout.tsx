@@ -1,6 +1,6 @@
 import Navbar from "@/app/components/navbar";
 import React from "react";
-import Header from "../components/header";
+import { useAuthInitializer } from "@/hooks/useAuthInitializer";
 
 type Props = {
   children: React.ReactElement;

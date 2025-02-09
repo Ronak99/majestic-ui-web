@@ -7,7 +7,7 @@ export default function InstallationPage() {
   return (
     <>
       <Heading
-        title={"Installation"}
+        currentTitle={"Installation"}
         subtitle={
           "Get started by installing the majestic_ui command line interface."
         }

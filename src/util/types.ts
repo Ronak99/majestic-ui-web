@@ -48,3 +48,22 @@ export type ContentFile = {
   filepath: string;
   content: string;
 };
+
+export type GithubRepository = {
+  name: string;
+  url: string;
+  owner: {
+    login: string;
+    node_id: string;
+  };
+};
+
+export type GithubRepositoryContent = {
+  name: string;
+  type: "file" | "dir";
+  path: string;
+  size: number;
+  sha: string;
+  url: string;
+  download_url: string | null;
+};

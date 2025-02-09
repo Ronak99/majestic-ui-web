@@ -5,6 +5,9 @@ import { createUser } from "./user";
 export async function signInWithGithub() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
+    options: {
+      scopes: "read:user user:email repo",
+    },
   });
 
   if (error) {

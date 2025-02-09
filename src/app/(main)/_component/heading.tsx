@@ -2,7 +2,7 @@ import TextMorph from "@/app/components/text-morph";
 
 type Props = {
   currentTitle: string;
-  previousTitle: string;
+  previousTitle?: string;
   subtitle: string;
 };
 
@@ -16,7 +16,7 @@ export default function Heading({
       {/* <TextMorph currentText={previousTitle} targetText={currentTitle} /> */}
       <h1 className="text-3xl font-bold tracking-tight">{currentTitle}</h1>
 
-      <h4 className="text-md text-muted-foreground max-w-[450px] mt-4">
+      <h4 className="text-md text-muted-foreground max-w-[450px] mt-3">
         {subtitle}
       </h4>
     </>

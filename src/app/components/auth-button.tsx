@@ -6,43 +6,10 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { createUser } from "@/actions/user";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function AuthButton() {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Fetch user data when component mounts
-    const fetchUser = async () => {
-      try {
-        const supabaseUser = await getUser();
-        setUser(supabaseUser);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUser();
-
-    // Set up auth state change listener
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        createUser(session?.user);
-      }
-      setUser(session?.user ?? null);
-    });
-
-    // Cleanup subscription on unmount
-    return () => subscription.unsubscribe();
-  }, []);
-
-  if (loading) {
-    return <></>;
-  }
+  const { user, signIn } = useAuthStore();
 
   if (user) {
     return (
@@ -69,13 +36,5 @@ export default function AuthButton() {
     );
   }
 
-  return (
-    <Button
-      onClick={() => {
-        signInWithGithub();
-      }}
-    >
-      Sign In with GitHub
-    </Button>
-  );
+  return <></>;
 }

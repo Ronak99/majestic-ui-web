@@ -1,13 +1,17 @@
+"use client";
+
 import Link from "next/link";
 import Heading from "../../_component/heading";
 import { Button } from "@/components/ui/button";
 import { IconChevronRight } from "@tabler/icons-react";
+import { supabase } from "@/lib/supabase/client";
+import { useEffect } from "react";
 
 export default function IntroductionPage() {
   return (
     <>
       <Heading
-        title={"Introduction"}
+        currentTitle={"Introduction"}
         subtitle={
           "Beautifully designed Flutter widgets that you can copy and paste into your apps. Accessible. Customizable. Open Source."
         }
@@ -38,7 +42,7 @@ export default function IntroductionPage() {
         referrerpolicy="strict-origin-when-cross-origin"
         allowfullscreen
         allowFullScreen={true}
-      ></iframe>
+      />
     </>
   );
 }

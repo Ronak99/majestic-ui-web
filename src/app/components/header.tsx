@@ -42,6 +42,7 @@ export default function Header() {
                 link: "widgets/star_rush_background",
               },
               { label: "Pages", root: "pages", link: "pages/profile_page" },
+              { label: "Publish", root: "publish", link: "publish" },
             ].map((e) => (
               <Link
                 href={`/${e.link}`}

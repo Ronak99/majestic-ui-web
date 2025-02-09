@@ -6,6 +6,8 @@ import { Analytics } from "@vercel/analytics/react";
 import Footer from "./components/footer";
 import DataLoader from "./components/data-loader";
 import Header from "./components/header";
+import { supabase } from "@/lib/supabase/client";
+import { useAuthInitializer } from "@/hooks/useAuthInitializer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
