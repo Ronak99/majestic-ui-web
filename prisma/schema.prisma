@@ -23,22 +23,15 @@ model users {
   registry   registry[]
 }
 
-enum RegistryItemType {
-  FLOW
-  PAGE
-  WIDGET
-  ARCHITECTURE
-}
-
 model registry {
-  id         Int              @id @default(autoincrement())
-  name       String           @unique
-  label      String           @unique
-  type       RegistryItemType
+  id         Int      @id @default(autoincrement())
+  name       String   @unique
+  label      String   @unique
+  type       String
   authorId   String
-  author     users            @relation(fields: [authorId], references: [uid])
-  created_at DateTime         @default(now())
-  updated_at DateTime         @default(now())
+  author     users    @relation(fields: [authorId], references: [uid])
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
   content    content?
 }
 
@@ -47,9 +40,10 @@ model content {
   name         String   @unique
   registry     registry @relation(fields: [name], references: [name])
   label        String   @unique
+  preview_url  String   @unique
   description  String
   dependencies Json
-  demo         Json
+  demo         String
   files        Json
   created_at   DateTime @default(now())
 }

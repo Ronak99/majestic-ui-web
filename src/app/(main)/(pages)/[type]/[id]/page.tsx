@@ -28,7 +28,7 @@ export default function WidgetDetail() {
   }
 
   if (status == "loading") {
-    return <Loading />;
+    return <Loading size="lg" variant="light" />;
   }
 
   if (status === "success")
@@ -44,7 +44,7 @@ function RenderComponent({ component }: { component: RegistryContent }) {
         subtitle={component?.description ?? ""}
       />
 
-      <PreviewAndCodeView selectedComponent={component} />
+      <PreviewAndCodeView registryContent={component} />
 
       {/* Installation */}
       <DetailSectionView heading="Installation">

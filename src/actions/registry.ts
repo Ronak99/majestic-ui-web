@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { PublishWidgetProps } from "@/util/types";
 
 export async function getAllRegistryItems() {
   return await db.registry.findMany({
@@ -45,4 +46,30 @@ export async function getContentForCli(names: string[]) {
       files: true,
     },
   });
+}
+
+export async function createRegistryAndContent(
+  publishData: PublishWidgetProps
+) {
+  const response = await db.registry.create({
+    data: {
+      label: publishData.label,
+      name: publishData.name,
+      type: "widget",
+      authorId: publishData.authorId,
+
+      content: {
+        create: {
+          demo: publishData.name,
+          dependencies: publishData.dependencies,
+          description: publishData.description,
+          files: publishData.files,
+          label: publishData.label,
+          preview_url: publishData.preview_url,
+        },
+      },
+    },
+  });
+
+  console.log(response);
 }

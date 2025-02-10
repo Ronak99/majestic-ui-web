@@ -1,26 +1,5 @@
 import { Prisma } from "@prisma/client";
-// type Content = {
-//   name: string;
-//   dir: string;
-//   content: string;
-// };
-
-// type Component = {
-//   name: string;
-//   label: string;
-//   description: string;
-//   dependencies: string[];
-//   demo: string;
-//   files: Content[];
-// };
-
-// type RegistryItem = {
-//   name: string;
-//   label: string;
-//   type: string;
-//   author: string;
-//   github: string;
-// };
+import { z } from "zod";
 
 export type RegistryItem = Prisma.registryGetPayload<{
   select: {
@@ -40,6 +19,7 @@ export type RegistryContent = Prisma.contentGetPayload<{
     id: true;
     label: true;
     name: true;
+    preview_url: true;
   };
 }>;
 
@@ -67,3 +47,40 @@ export type GithubRepositoryContent = {
   url: string;
   download_url: string | null;
 };
+
+export type ScannedFile = {
+  name: string;
+  file_path: string;
+  content: string;
+};
+
+export type GithubScanResult = {
+  name: string;
+  label: string | undefined;
+  description: string;
+  dependencies: string[];
+  files: ScannedFile[];
+};
+
+export type PublishWidgetProps = {
+  name: string;
+  label: string;
+  preview_url: string;
+  type: "widget" | "page";
+  authorId: string;
+  demo: string;
+  dependencies: string[];
+  description: string;
+  files: ScannedFile[];
+};
+
+export const WIDGET_TYPE = ["widget", "page"] as const;
+
+export const PublishFormSchema = z.object({
+  name: z.string().min(1, "Required"),
+  label: z
+    .string()
+    .min(1, "Please provide an appropriate name for your widget"),
+  type: z.enum(WIDGET_TYPE),
+  preview_url: z.string().url("Please provide a valid url."),
+});

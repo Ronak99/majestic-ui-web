@@ -8,6 +8,7 @@ import DataLoader from "./components/data-loader";
 import Header from "./components/header";
 import { supabase } from "@/lib/supabase/client";
 import { useAuthInitializer } from "@/hooks/useAuthInitializer";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -64,6 +65,7 @@ export default function RootLayout({
             {/* <Analytics /> */}
             <DataLoader />
             <Footer />
+            <Toaster theme="dark" />
           </div>
         </ThemeProvider>
       </body>

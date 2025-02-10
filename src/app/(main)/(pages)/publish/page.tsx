@@ -3,7 +3,7 @@
 import Heading from "../../_component/heading";
 import { useAuthStore } from "@/store/useAuthStore";
 import NoUserView from "./_components/no-user-view";
-import GithubContentView from "./_components/github-content-view";
+import ContentView from "./_components/content-view";
 
 export default function PublishPage() {
   const { user } = useAuthStore();
@@ -17,7 +17,7 @@ export default function PublishPage() {
 
       {!user && <NoUserView />}
 
-      {user && <GithubContentView />}
+      {user && <ContentView />}
     </>
   );
 }
