@@ -1,7 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { getRepoContents, getUserRepos } from "@/actions/github";
+import {
+  getRepoContents,
+  getRepositoryTree,
+  getUserRepos,
+} from "@/actions/github";
 import { FolderIcon, FileIcon, ChevronRightIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -18,6 +22,7 @@ import Loading from "@/app/components/loading";
 import yaml from "yaml";
 
 import { toast } from "sonner";
+import { signOut } from "@/actions/auth";
 
 type PathSegment = {
   name: string;
@@ -65,13 +70,31 @@ export default function GithubContentView({
     owner: string;
   } | null>(null);
   const [isScanning, setIsScanning] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const initialize = async () => {
-    const repositories = await getUserRepos();
-    setRepos(repositories);
-    setContent(undefined);
-    setSelectedRepo(null);
-    setPathHistory([{ name: "All", path: "" }]);
+    setIsLoading(true);
+
+    try {
+      const repositories = await getUserRepos();
+      setRepos(repositories);
+      setContent(undefined);
+      setSelectedRepo(null);
+      setPathHistory([{ name: "All", path: "" }]);
+    } catch (e) {
+      if (e instanceof Error) {
+        if (e.cause === "no-refresh-token") {
+          toast("Session Expired.", {
+            description:
+              "Your Github session was expired, please sign in again.",
+          });
+
+          signOut();
+        }
+      }
+    }
+
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -79,8 +102,12 @@ export default function GithubContentView({
   }, []);
 
   const handleRepoClick = async (repo: GithubRepository) => {
+    if (isLoading) return;
+
     setSelectedRepo({ name: repo.name, owner: repo.owner.login });
     setPathHistory((prev) => [...prev, { name: repo.name, path: "" }]);
+
+    setIsLoading(true);
 
     try {
       const data = await getRepoContents(repo.owner.login, repo.name, "");
@@ -88,13 +115,19 @@ export default function GithubContentView({
       setContent(Array.isArray(data) ? data : [data]);
     } catch (error) {
       console.error("Error fetching repo contents:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleContentClick = async (item: GithubRepositoryContent) => {
+    if (isLoading) return;
+
     if (item.type === "dir" && selectedRepo) {
       setIsScanning(false);
       setPathHistory((prev) => [...prev, { name: item.name, path: item.path }]);
+
+      setIsLoading(true);
 
       try {
         const data = await getRepoContents(
@@ -106,11 +139,15 @@ export default function GithubContentView({
         setContent(Array.isArray(data) ? data : [data]);
       } catch (error) {
         console.error("Error fetching directory contents:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
 
   const navigateToPath = async (index: number) => {
+    if (isLoading) return;
+
     setIsScanning(false);
 
     // If clicking on "All", reset to repository list
@@ -120,6 +157,8 @@ export default function GithubContentView({
       setPathHistory([{ name: "All", path: "" }]);
       return;
     }
+
+    setIsLoading(true);
 
     // Get the path segments up to the clicked index
     const newPathHistory = pathHistory.slice(0, index + 1);
@@ -137,6 +176,8 @@ export default function GithubContentView({
         setContent(Array.isArray(data) ? data : [data]);
       } catch (error) {
         console.error("Error navigating to repository:", error);
+      } finally {
+        setIsLoading(false);
       }
       return;
     }
@@ -154,6 +195,8 @@ export default function GithubContentView({
         setContent(Array.isArray(data) ? data : [data]);
       } catch (error) {
         console.error("Error navigating to path:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -200,6 +243,27 @@ export default function GithubContentView({
     return scannedFiles;
   }
 
+  // async function scanRepositoryv2() {
+  //   // Get all files
+
+  //   const files = await getRepositoryTree(
+  //     selectedRepo!.owner,
+  //     selectedRepo!.name,
+  //     false
+  //   );
+
+  //   console.log(files);
+
+  //   // Filter for specific file types and exclude node_modules, etc.
+  //   // const relevantFiles = filterFiles(files, {
+  //   //   extensions: ["js", "ts", "jsx", "tsx", "py", "java"],
+  //   //   exclude: ["node_modules", "dist", "build", ".git"],
+  //   //   maxSize: 1024 * 100, // 100KB max
+  //   // });
+
+  //   return;
+  // }
+
   const scanRepository = async () => {
     try {
       if (isScanning) return;
@@ -215,8 +279,6 @@ export default function GithubContentView({
 
       // Validate pubspec.yaml existence
       const pubspecInfo = await extractPubspecInfo(directoryContents);
-
-      console.log(pubspecInfo);
 
       // Validate lib directory existence
       const libDirectory = directoryContents.find(
@@ -328,7 +390,7 @@ export default function GithubContentView({
   }
 
   return (
-    <Card className="flex flex-col h-[550px] mt-4">
+    <Card className="flex flex-col h-[550px] mt-4 relative">
       {/* Top Bar */}
       <div className="flex items-center justify-between font-medium border-b px-4 py-4 w-full">
         <div>
@@ -367,7 +429,7 @@ export default function GithubContentView({
           repos?.map((repo) => (
             <div
               key={repo.name}
-              className={`flex justify-between cursor-pointer px-4 py-3 items-center border-b hover:bg-neutral-800 transition-colors ${
+              className={`flex justify-between cursor-pointer px-4 py-3 items-center border-b hover:bg-neutral-800 transition ${
                 selectedRepo?.name === repo.name ? "bg-neutral-800" : ""
               }`}
               onClick={() => handleRepoClick(repo)}
@@ -383,7 +445,8 @@ export default function GithubContentView({
           content.map((item) => (
             <div
               key={item.sha}
-              className="flex justify-between cursor-pointer px-4 py-3 items-center border-b hover:bg-neutral-800 transition-colors"
+              aria-disabled={true}
+              className={`flex justify-between cursor-pointer px-4 py-3 items-center border-b hover:bg-neutral-800 transition`}
               onClick={() => handleContentClick(item)}
             >
               {item.type === "dir" ? (
@@ -411,6 +474,13 @@ export default function GithubContentView({
             </div>
           ))}
       </div>
+
+      {/* Loading Overlay */}
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+          <Loading size="md" variant="light" />
+        </div>
+      )}
     </Card>
   );
 }

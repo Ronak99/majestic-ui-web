@@ -1,6 +1,5 @@
 import { supabase } from "@/lib/supabase/client";
-import { User } from "@supabase/supabase-js";
-import { createUser } from "./user";
+import { Session, User } from "@supabase/supabase-js";
 
 export async function signInWithGithub() {
   const { data, error } = await supabase.auth.signInWithOAuth({
