@@ -6,24 +6,24 @@ interface Props {
 }
 
 export default function Loading(props: Props) {
-  let strokeWidth = "4";
+  let strokeWidth = "3";
   let width = "20";
 
   if (props.size == "lg") {
-    strokeWidth = "8";
-    width = "35";
+    width = "45";
   } else if (props.size == "md") {
-    strokeWidth = "6";
     width = "30";
   }
 
   return (
-    <RotatingLines
-      strokeColor={props.variant == "light" ? "white" : "black"}
-      strokeWidth="4"
-      animationDuration="0.1"
-      width="20"
-      visible={true}
-    />
+    <center>
+      <RotatingLines
+        strokeColor={props.variant == "light" ? "white" : "black"}
+        strokeWidth={strokeWidth}
+        animationDuration="0.1"
+        width={width}
+        visible={true}
+      />
+    </center>
   );
 }

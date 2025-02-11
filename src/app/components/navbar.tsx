@@ -135,7 +135,7 @@ const LeftPanel = () => {
   return (
     <nav className="flex flex-col hidden md:block pr-4 py-6 border-r h-full">
       <div className="flex flex-col gap-8">
-        <Suspense fallback={<Loading />}>
+        <Suspense fallback={<Loading size="md" variant="light" />}>
           <AnimatePresence>
             {(animatedSections.length > 0 ? animatedSections : []).map(
               (section) => (

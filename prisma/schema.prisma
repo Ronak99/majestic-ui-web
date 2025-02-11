@@ -23,16 +23,23 @@ model users {
   registry   registry[]
 }
 
+enum RegistryStatus {
+  under_review
+  approved
+  suggested_changes
+}
+
 model registry {
-  id         Int      @id @default(autoincrement())
-  name       String   @unique
-  label      String   @unique
+  id         Int            @id @default(autoincrement())
+  name       String         @unique
+  label      String         @unique
   type       String
   authorId   String
-  author     users    @relation(fields: [authorId], references: [uid])
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  author     users          @relation(fields: [authorId], references: [uid])
+  created_at DateTime       @default(now())
+  updated_at DateTime       @default(now())
   content    content?
+  status     RegistryStatus
 }
 
 model content {

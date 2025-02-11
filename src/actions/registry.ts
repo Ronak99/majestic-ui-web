@@ -2,6 +2,7 @@
 
 import { db } from "@/lib/db";
 import { PublishWidgetProps } from "@/util/types";
+import { RegistryStatus } from "@prisma/client";
 
 export async function getAllRegistryItems() {
   return await db.registry.findMany({
@@ -9,6 +10,9 @@ export async function getAllRegistryItems() {
       label: true,
       name: true,
       type: true,
+    },
+    where: {
+      status: RegistryStatus.approved,
     },
   });
 }
@@ -26,6 +30,7 @@ export async function getContent(name: string) {
         label: true,
         name: true,
         description: true,
+        preview_url: true,
       },
     });
   } catch (e) {
@@ -57,7 +62,7 @@ export async function createRegistryAndContent(
       name: publishData.name,
       type: "widget",
       authorId: publishData.authorId,
-
+      status: RegistryStatus.under_review,
       content: {
         create: {
           demo: publishData.name,
