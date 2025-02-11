@@ -25,6 +25,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 export default function PublishForm({
   scanResult,
@@ -57,6 +58,11 @@ export default function PublishForm({
         name: scanResult.name,
         type: values.type,
         preview_url: values.preview_url,
+      });
+
+      toast("Component Submitted.", {
+        description:
+          "Thank you for your contribution, your component has been published submitted successfully.",
       });
     } catch (e) {
       if (e instanceof Error) {
