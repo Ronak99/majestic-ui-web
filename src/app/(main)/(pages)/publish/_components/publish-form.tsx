@@ -159,27 +159,38 @@ export default function PublishForm({
                 </FormItem>
               )}
             />
-            <Select name="type">
-              <div className="flex flex-col gap-2">
-                <FormLabel className="text-sm font-medium text-muted-foreground">
-                  Categorize your widget
-                </FormLabel>
-                <SelectTrigger className="">
-                  <SelectValue placeholder="Select a Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Categories</SelectLabel>
-                    {WIDGET_TYPE.map((e) => (
-                      <SelectItem key={e} value={e}>
-                        {e[0].toUpperCase() +
-                          e.substring(1, e.length).toLowerCase()}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </div>
-            </Select>
+            <FormField
+              control={form.control}
+              name="type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm font-medium text-muted-foreground">
+                    Categorize your widget
+                  </FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a Category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Categories</SelectLabel>
+                        {WIDGET_TYPE.map((e) => (
+                          <SelectItem key={e} value={e}>
+                            {e[0].toUpperCase() +
+                              e.substring(1, e.length).toLowerCase()}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
           </div>
         </form>
       </Form>
