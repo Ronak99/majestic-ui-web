@@ -10,14 +10,21 @@ export default function ContentView() {
   const [scanResult, setScanResult] = useState<GithubScanResult>();
 
   const handleSuccessfulScan = (scanResult: GithubScanResult) => {
-    console.log(scanResult);
     setPage("form");
     setScanResult(scanResult);
+  };
+
+  const onBackButtonTap = () => {
+    setPage("github");
   };
 
   if (page == "github") {
     return <GithubContentView onSuccessfulScan={handleSuccessfulScan} />;
   }
 
-  return scanResult && <PublishForm scanResult={scanResult} />;
+  return (
+    scanResult && (
+      <PublishForm scanResult={scanResult} onBackButtonTap={onBackButtonTap} />
+    )
+  );
 }

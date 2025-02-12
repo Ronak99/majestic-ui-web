@@ -26,11 +26,15 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function PublishForm({
   scanResult,
+  onBackButtonTap,
 }: {
   scanResult: GithubScanResult;
+  onBackButtonTap: () => void;
 }) {
   const [isPublishing, setIsPublishing] = useState<boolean>(false);
 
@@ -86,7 +90,17 @@ export default function PublishForm({
         >
           {/* Top Bar */}
           <div className="flex items-center justify-between font-medium border-b px-4 py-4 w-full">
-            <p className="font-semibold text-lg">Details Form</p>
+            <div className="flex gap-2 items-center">
+              <Button
+                size={"icon"}
+                onClick={onBackButtonTap}
+                variant={"ghost"}
+                className="text-blue-500 p-0"
+              >
+                <ArrowLeft />
+              </Button>
+              <p className="font-semibold text-lg">Details Form</p>
+            </div>
             {
               <button
                 className="flex items-center justify-center rounded-lg bg-white text-black font-semibold text-sm py-1 cursor-pointer w-20"
@@ -99,39 +113,37 @@ export default function PublishForm({
           </div>
 
           {/* Publish Form View */}
-          <div className="flex flex-col gap-10 h-full justify-center">
-            <div className="flex gap-4">
-              <FormField
-                disabled={true}
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-sm font-medium text-muted-foreground">
-                      Package Name
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder="Name" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                disabled={isPublishing}
-                control={form.control}
-                name="label"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-sm font-medium text-muted-foreground">
-                      Name
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder="Name" {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
+          <div className="flex flex-col gap-6 h-full w-full px-24 justify-center">
+            <FormField
+              disabled={true}
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm font-medium text-muted-foreground">
+                    Package Name
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Name" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              disabled={isPublishing}
+              control={form.control}
+              name="label"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm font-medium text-muted-foreground">
+                    Name
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Name" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
             <FormField
               disabled={isPublishing}
               control={form.control}
