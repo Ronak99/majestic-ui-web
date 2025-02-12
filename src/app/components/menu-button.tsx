@@ -40,7 +40,7 @@ export default function MenuButton() {
           .filter((widget) => widget.type === type)
           .map((widget) => ({
             label: widget.label || "",
-            value: `/${type + "s"}/${widget.name?.toLowerCase()}` || "",
+            value: `/registry/${widget.name?.toLowerCase()}` || "",
           })),
       })
     ),
@@ -50,6 +50,14 @@ export default function MenuButton() {
         {
           label: "Request a widget",
           value: "/request",
+        },
+        {
+          label: "Publish",
+          value: "/publish",
+        },
+        {
+          label: "Contribute",
+          value: "https://github.com/Ronak99/majestic-ui-flutter/",
         },
       ],
     },
