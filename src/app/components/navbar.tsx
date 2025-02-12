@@ -22,7 +22,10 @@ const OptionItem = ({
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.2 }}
     >
-      <Link href={option.value}>
+      <Link
+        href={option.value}
+        target={option.value.includes("https") ? "_" : "_self"}
+      >
         <div
           className={`flex space-x-3 items-center px-2 py-[6px] text-white cursor-pointer rounded-lg transition ease-in-out duration-200 bg-transparent hover:bg-zinc-900 ${
             pathname?.includes(option.value) ? "bg-zinc-800" : ""
