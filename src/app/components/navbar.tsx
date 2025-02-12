@@ -55,7 +55,7 @@ const SectionView = ({
       <h3 className="font-semibold text-sm px-2">{section.title}</h3>
       <div className="flex flex-col gap-[2px]">
         {section.options.map((option) => (
-          <OptionItem key={option.label} option={option} pathname={pathname} />
+          <OptionItem key={option.value} option={option} pathname={pathname} />
         ))}
       </div>
     </motion.div>
@@ -91,7 +91,7 @@ const LeftPanel = () => {
               .filter((item) => item.type === type)
               .map((widget) => ({
                 label: widget.label || "",
-                value: `/${type + "s"}/${widget.name?.toLowerCase()}` || "",
+                value: `/registry/${widget.name?.toLowerCase()}` || "",
               })),
           })
         ),

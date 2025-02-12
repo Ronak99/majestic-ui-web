@@ -35,14 +35,12 @@ export default function Header() {
           </Link>
           <div className="flex gap-4 hidden md:flex">
             {[
-              { label: "Docs", root: "introduction", link: "introduction" },
               {
-                label: "Widgets",
-                root: "widgets",
-                link: "widgets/star_rush_background",
+                label: "Introduction",
+                root: "introduction",
+                link: "introduction",
               },
-              { label: "Pages", root: "pages", link: "pages/profile_page" },
-              { label: "Publish", root: "publish", link: "publish" },
+              { label: "Docs", root: "installation", link: "installation" },
             ].map((e) => (
               <Link
                 href={`/${e.link}`}
