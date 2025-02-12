@@ -41,6 +41,7 @@ export default function Header() {
                 link: "introduction",
               },
               { label: "Docs", root: "installation", link: "installation" },
+              { label: "Publish", root: "publish", link: "publish" },
             ].map((e) => (
               <Link
                 href={`/${e.link}`}
@@ -54,7 +55,24 @@ export default function Header() {
             ))}
           </div>
         </div>
-        <AuthButton />
+        <div className="flex gap-2 items-center">
+          <AuthButton />
+          <Link
+            href="https://github.com/Ronak99/majestic-ui-flutter/"
+            target="_blank"
+            className="hidden md:block"
+          >
+            <Button onClick={() => {}} variant={"ghost"}>
+              <Image
+                src="/github.svg"
+                height={20}
+                width={20}
+                alt={"Contribute"}
+              />
+              <span className="text-white font-semibold">Contribute</span>
+            </Button>
+          </Link>
+        </div>
       </div>
     </header>
   );
