@@ -83,14 +83,10 @@ export default function GithubContentView({
       setPathHistory([{ name: "All", path: "" }]);
     } catch (e) {
       if (e instanceof Error) {
-        if (e.cause === "no-refresh-token") {
-          toast("Session Expired.", {
-            description:
-              "Your Github session was expired, please sign in again.",
-          });
-
-          signOut();
-        }
+        toast("Session Expired.", {
+          description: "Your Github session was expired, please sign in again.",
+        });
+        signOut();
       }
     }
 
@@ -214,6 +210,7 @@ export default function GithubContentView({
     ownerName: string,
     repoName: string,
     directoryPath: string,
+    componentName: string,
     scannedFiles: ScannedFile[] = []
   ): Promise<ScannedFile[]> {
     const directoryContents = (await getRepoContents(
@@ -222,6 +219,8 @@ export default function GithubContentView({
       directoryPath
     )) as RepoItem[];
 
+    const trailingPath = directoryPath.split("lib")[1];
+
     for (const item of directoryContents) {
       if (item.type === "file") {
         const fileContent = await fetchFileContent(
@@ -229,14 +228,21 @@ export default function GithubContentView({
           repoName,
           item.download_url
         );
+
         scannedFiles.push({
           name: item.name,
-          file_path: directoryPath,
+          file_path: `lib/majestic/community/${componentName}${trailingPath}/${item.name}`,
           content: fileContent,
         });
       } else if (item.type === "dir") {
         // Recursively scan subdirectories
-        await scanDirectory(ownerName, repoName, item.path, scannedFiles);
+        await scanDirectory(
+          ownerName,
+          repoName,
+          item.path,
+          componentName,
+          scannedFiles
+        );
       }
     }
 
@@ -303,7 +309,8 @@ export default function GithubContentView({
       const scannedFiles = await scanDirectory(
         selectedRepo!.owner,
         selectedRepo!.name,
-        libDirectory.path
+        libDirectory.path,
+        pubspecInfo.name
       );
 
       toast("Scanned Successfully.", {
@@ -315,7 +322,7 @@ export default function GithubContentView({
         dependencies: pubspecInfo.dependency_names,
         description: pubspecInfo.description,
         label: pubspecInfo.label,
-        name: pubspecInfo.name,
+        name: "community/" + pubspecInfo.name,
         files: scannedFiles,
       });
 

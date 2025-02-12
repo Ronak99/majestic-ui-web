@@ -49,6 +49,11 @@ export async function getContentForCli(names: string[]) {
       name: true,
       dependencies: true,
       files: true,
+      registry: {
+        select: {
+          status: true,
+        },
+      },
     },
   });
 }
