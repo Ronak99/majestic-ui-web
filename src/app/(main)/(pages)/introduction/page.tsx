@@ -1,11 +1,6 @@
 "use client";
 
-import Link from "next/link";
 import Heading from "../../_component/heading";
-import { Button } from "@/components/ui/button";
-import { IconChevronRight } from "@tabler/icons-react";
-import { supabase } from "@/lib/supabase/client";
-import { useEffect } from "react";
 
 export default function IntroductionPage() {
   return (
@@ -24,7 +19,7 @@ export default function IntroductionPage() {
         The idea is simple, instead of adding everything as a package, what if
         you could{" "}
         <span className="bg-amber-800/50 font-semibold">
-          import Flutter code directly in your project
+          import Flutter code directly into your project
         </span>
         . The code you import from majestic ui is yours to modify, that is why
         the implementation is quite simple and the documentation will improve
