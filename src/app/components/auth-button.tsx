@@ -17,7 +17,23 @@ export default function AuthButton() {
     return (
       <Popover onOpenChange={setIsOpen}>
         <PopoverTrigger>
-          <div
+          <Button
+            onClick={() => {}}
+            size={"custom"}
+            className={`bg-neutral-800 font-semibold text-white hover:text-black hover:bg-white ${
+              isOpen ? "bg-zinc-900" : "bg-transparent"
+            }`}
+          >
+            {user.user_metadata?.avatar_url && (
+              <img
+                src={user.user_metadata.avatar_url}
+                alt="User avatar"
+                className="h-[22px] w-[22px] rounded-full"
+              />
+            )}
+            {user.user_metadata?.user_name}
+          </Button>
+          {/* <div
             className={`rounded-md h-full pl-4 pr-8 py-2 hover:bg-zinc-900 transition-colors duration-300 ${
               isOpen ? "bg-zinc-900" : "bg-transparent"
             }`}
@@ -34,7 +50,7 @@ export default function AuthButton() {
                 {user.user_metadata?.user_name}
               </p>
             </div>
-          </div>
+          </div> */}
         </PopoverTrigger>
         <PopoverContent className="bg-zinc-900 p-0 mr-4 rounded-sm w-[200px]">
           <div className="border-b p-3">
@@ -65,4 +81,25 @@ export default function AuthButton() {
   }
 
   return <></>;
+
+  // return (
+  //   <TooltipProvider>
+  //     <Tooltip>
+  //       <TooltipTrigger asChild>
+  //         <Link href="/publish">
+  //           <Button
+  //             onClick={() => {}}
+  //             size={"custom"}
+  //             className="bg-neutral-800 font-semibold text-white hover:text-black hover:bg-white"
+  //           >
+  //             Publish
+  //           </Button>
+  //         </Link>
+  //       </TooltipTrigger>
+  //       <TooltipContent className="bg-neutral-800 text-white">
+  //         <p>Publish your own package.</p>
+  //       </TooltipContent>
+  //     </Tooltip>
+  //   </TooltipProvider>
+  // );
 }
