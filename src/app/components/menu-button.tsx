@@ -9,13 +9,14 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import useWidgetStore from "@/store/useWidgetStore";
+import useRegistry from "@/store/useRegistry";
+import useWidgetStore from "@/store/useRegistry";
 import { NavSection } from "@/util/constants";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function MenuButton() {
-  const { allWidgets } = useWidgetStore();
+  const { registry } = useRegistry();
 
   // Compute sections by combining static and dynamic data
   const navSections: NavSection[] = [
@@ -32,14 +33,14 @@ export default function MenuButton() {
         },
       ],
     },
-    ...Array.from(new Set(allWidgets.map((widget) => widget.type))).map(
+    ...Array.from(new Set(registry.map((widget) => widget.type))).map(
       (type) => ({
         title: type.charAt(0).toUpperCase() + type.slice(1) + "s",
-        options: allWidgets
+        options: registry
           .filter((widget) => widget.type === type)
           .map((widget) => ({
             label: widget.label || "",
-            value: `/${type + "s"}/${widget.name?.toLowerCase()}` || "",
+            value: `/registry/${widget.name?.toLowerCase()}` || "",
           })),
       })
     ),
@@ -49,6 +50,14 @@ export default function MenuButton() {
         {
           label: "Request a widget",
           value: "/request",
+        },
+        {
+          label: "Publish",
+          value: "/publish",
+        },
+        {
+          label: "Contribute",
+          value: "https://github.com/Ronak99/majestic-ui-flutter/",
         },
       ],
     },

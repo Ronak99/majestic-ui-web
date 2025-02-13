@@ -1,12 +1,13 @@
 import { Card, CardHeader } from "@/components/ui/card";
 import { CodeBlock } from "@/components/ui/code-block";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { RegistryContent } from "@/util/types";
 import { useState } from "react";
 
 export default function PreviewAndCodeView({
-  selectedWidget,
+  registryContent,
 }: {
-  selectedWidget?: Widget;
+  registryContent?: RegistryContent;
 }) {
   const [selectedTab, setSelectedTab] = useState<string>("preview");
 
@@ -42,9 +43,7 @@ export default function PreviewAndCodeView({
         <Card className={`${viewDimensions}  w-[370px] rounded-[60px]`}>
           <iframe
             className="h-full w-full rounded-[60px]"
-            src={`https://majestic-flutter-web.web.app/#/${
-              selectedWidget!.name
-            }`}
+            src={registryContent!.preview_url}
           />
         </Card>
         <Card
@@ -56,7 +55,7 @@ export default function PreviewAndCodeView({
         >
           <CodeBlock
             filename=""
-            code={selectedWidget?.demo ?? ""}
+            code={registryContent?.demo ?? ""}
             language="dart"
           />
         </Card>

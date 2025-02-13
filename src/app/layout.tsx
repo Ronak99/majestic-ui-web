@@ -5,6 +5,10 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import { Analytics } from "@vercel/analytics/react";
 import Footer from "./components/footer";
 import DataLoader from "./components/data-loader";
+import Header from "./components/header";
+import { supabase } from "@/lib/supabase/client";
+import { useAuthInitializer } from "@/hooks/useAuthInitializer";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,10 +60,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="flex flex-col min-h-svh bg-background">
+            <Header />
             {children}
-            <Analytics />
+            {/* <Analytics /> */}
             <DataLoader />
             <Footer />
+            <Toaster theme="dark" />
           </div>
         </ThemeProvider>
       </body>

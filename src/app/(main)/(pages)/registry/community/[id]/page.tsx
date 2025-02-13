@@ -1,36 +1,50 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import Heading from "../../../_component/heading";
-import useWidgetStore from "@/store/useWidgetStore";
-import DetailSectionView from "./_component/detail-section-view";
 import { CodeBlock } from "@/components/ui/code-block";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { Card } from "@/components/ui/card";
-import PreviewAndCodeView from "./_component/preview-and-code-view";
 import Loading from "@/app/components/loading";
+import {
+  ComponentNotFoundError,
+  InvalidComponentNameError,
+  useRegistryContent,
+} from "@/hooks/useRegistryContent";
+import { ContentFile, RegistryContent } from "@/util/types";
+import Heading from "@/app/(main)/_component/heading";
+import PreviewAndCodeView from "../../_component/preview-and-code-view";
+import DetailSectionView from "../../_component/detail-section-view";
 
 export default function WidgetDetail() {
-  const pathname = usePathname();
-  const widgetId = pathname.split("/").pop();
+  const { status, data: component, error } = useRegistryContent();
 
-  const { allWidgets } = useWidgetStore();
-
-  if (!allWidgets.length) {
-    return <Loading />;
+  if (status === "error" && !component) {
+    if (error instanceof ComponentNotFoundError) {
+      return <div>Component not found. Please check the URL.</div>;
+    }
+    if (error instanceof InvalidComponentNameError) {
+      return <div>Invalid component URL.</div>;
+    }
+    return <div>An error occurred while loading the component.</div>;
   }
 
-  const selectedWidget = allWidgets.find((e) => e.name == widgetId);
+  if (status == "loading") {
+    return <Loading size="lg" variant="light" />;
+  }
 
+  if (status === "success")
+    return component && <RenderComponent component={component} />;
+}
+
+function RenderComponent({ component }: { component: RegistryContent }) {
   return (
     <>
       <Heading
-        title={selectedWidget?.label ?? ""}
-        subtitle={selectedWidget?.description ?? ""}
+        currentTitle={component?.label ?? ""}
+        previousTitle=""
+        subtitle={component?.description ?? ""}
       />
 
-      <PreviewAndCodeView selectedWidget={selectedWidget} />
+      <PreviewAndCodeView registryContent={component} />
 
       {/* Installation */}
       <DetailSectionView heading="Installation">
@@ -43,7 +57,7 @@ export default function WidgetDetail() {
           <CodeBlock
             language="bash"
             filename=""
-            code={`majestic_ui add ${selectedWidget?.name}`}
+            code={`majestic_ui add ${component?.name}`}
           />
         </div>
       </DetailSectionView>
@@ -54,7 +68,7 @@ export default function WidgetDetail() {
           language="dart"
           filename=""
           tabs={
-            selectedWidget?.files.map((file) => {
+            (component.files as ContentFile[]).map((file) => {
               return {
                 name: file.name,
                 code: file.content,
@@ -68,11 +82,11 @@ export default function WidgetDetail() {
       {/* Dependencies */}
       <DetailSectionView heading="Dependencies">
         <>
-          {selectedWidget?.dependencies &&
-          selectedWidget?.dependencies.length ? (
+          {component?.dependencies &&
+          (component?.dependencies as string[]).length ? (
             <div className="flex flex-col gap-4">
               <div className="flex flex-row gap-4">
-                {selectedWidget?.dependencies.map((dep) => (
+                {(component?.dependencies as string[]).map((dep) => (
                   <Link
                     key={dep}
                     href={`https://pub.dev/packages/${dep}`}

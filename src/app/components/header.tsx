@@ -6,19 +6,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Layers } from "lucide-react";
 import MenuButton from "./menu-button";
+import AuthButton from "./auth-button";
 
-type Props = {
-  showSideBorder: boolean;
-};
-
-export default function Header({ showSideBorder = true }: Props) {
+export default function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="border-grid sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="border-grid sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-[60px]">
       <div
-        className={`w-full m-auto lg:max-w-[1536px] py-3 px-5 border-l border-r flex justify-between ${
-          showSideBorder ? "xl:border-zinc-800" : "border-transparent"
+        className={`w-full h-full m-auto lg:max-w-[1536px] py-3 px-5 border-l border-r flex justify-between items-center ${
+          pathname.split("/").pop()?.length
+            ? "xl:border-zinc-800"
+            : "border-transparent"
         }`}
       >
         <div className="flex w-full items-center gap-8">
@@ -36,13 +35,13 @@ export default function Header({ showSideBorder = true }: Props) {
           </Link>
           <div className="flex gap-4 hidden md:flex">
             {[
-              { label: "Docs", root: "introduction", link: "introduction" },
               {
-                label: "Widgets",
-                root: "widgets",
-                link: "widgets/star_rush_background",
+                label: "Introduction",
+                root: "introduction",
+                link: "introduction",
               },
-              { label: "Pages", root: "pages", link: "pages/profile_page" },
+              { label: "Docs", root: "installation", link: "installation" },
+              { label: "Publish", root: "publish", link: "publish" },
             ].map((e) => (
               <Link
                 href={`/${e.link}`}
@@ -55,6 +54,24 @@ export default function Header({ showSideBorder = true }: Props) {
               </Link>
             ))}
           </div>
+        </div>
+        <div className="flex gap-2 items-center">
+          <AuthButton />
+          <Link
+            href="https://github.com/Ronak99/majestic-ui-flutter/"
+            target="_blank"
+            className="hidden md:block"
+          >
+            <Button onClick={() => {}} variant={"ghost"}>
+              <Image
+                src="/github.svg"
+                height={20}
+                width={20}
+                alt={"Contribute"}
+              />
+              <span className="text-white font-semibold">Contribute</span>
+            </Button>
+          </Link>
         </div>
       </div>
     </header>

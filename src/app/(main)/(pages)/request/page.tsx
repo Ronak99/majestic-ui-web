@@ -1,12 +1,13 @@
 import Link from "next/link";
 import Heading from "../../_component/heading";
-import DetailSectionView from "../[type]/[id]/_component/detail-section-view";
+import DetailSectionView from "../registry/_component/detail-section-view";
 
 export default function InstallationPage() {
   return (
     <>
       <Heading
-        title={"Request a widget"}
+        currentTitle="Request a widget"
+        previousTitle="Request a widget"
         subtitle={
           "Reach out to me and share a widget idea that you would like me to host on this platform."
         }
