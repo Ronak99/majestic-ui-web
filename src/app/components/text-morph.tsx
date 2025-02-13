@@ -16,7 +16,7 @@ const getSequenceToTarget = (start: string, end: string): string[] => {
 
   if (startIdx === -1 || endIdx === -1) return alphabet;
 
-  let sequence: string[] = [];
+  const sequence: string[] = [];
   let currentIdx = startIdx;
 
   while (currentIdx !== endIdx || sequence.length < alphabet.length) {

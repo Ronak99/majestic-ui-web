@@ -11,7 +11,7 @@ import { useState } from "react";
 
 export default function AuthButton() {
   const { user, signOut } = useAuthStore();
-  const [isOpen, setIsOpen] = useState<Boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   if (user) {
     return (

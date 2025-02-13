@@ -40,7 +40,7 @@ export const useRegistryContent = () => {
 
   useEffect(() => {
     // get the trailing value
-    let componentName = pathname.split("registry/")[1];
+    const componentName = pathname.split("registry/")[1];
 
     if (!componentName) {
       setState({

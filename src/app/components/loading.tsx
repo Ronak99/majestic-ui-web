@@ -6,7 +6,7 @@ interface Props {
 }
 
 export default function Loading(props: Props) {
-  let strokeWidth = "3";
+  const strokeWidth = "3";
   let width = "20";
 
   if (props.size == "lg") {
