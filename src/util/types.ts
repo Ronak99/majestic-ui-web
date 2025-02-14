@@ -6,6 +6,19 @@ export type RegistryItem = Prisma.registryGetPayload<{
     name: true;
     label: true;
     type: true;
+    content: {
+      select: {
+        created_at: true;
+        demo: true;
+        dependencies: true;
+        description: true;
+        files: true;
+        id: true;
+        label: true;
+        name: true;
+        preview_url: true;
+      };
+    };
   };
 }>;
 

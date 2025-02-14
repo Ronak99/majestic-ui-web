@@ -33,7 +33,7 @@ export default function Home() {
           <br />
         </div>
         <Link href="/introduction" className="mt-12">
-          <Button className="md:p-6 px-24 py-6 rounded-xl bg-white/90 text-black border border-black text-md font-semibold">
+          <Button className="md:py-6 md:px-20 px-24 py-6 rounded-xl bg-white/90 text-black border border-black text-md font-semibold">
             Get Started
           </Button>
         </Link>

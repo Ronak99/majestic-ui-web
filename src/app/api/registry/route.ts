@@ -9,9 +9,7 @@ export async function GET(req: Request) {
   const registryItemList = query?.split(",");
 
   if (!registryItemList?.length) {
-    const items = await getAllRegistryItems();
-
-    return new NextResponse(JSON.stringify({ registry: items }), {
+    return new NextResponse(JSON.stringify({ registry: "enter something." }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",

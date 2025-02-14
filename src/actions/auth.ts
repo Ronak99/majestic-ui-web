@@ -6,6 +6,7 @@ export async function signInWithGithub() {
     provider: "github",
     options: {
       scopes: "read:user user:email repo",
+      redirectTo: process.env.NEXT_PUBLIC_AUTH_REDIRECT,
     },
   });
 

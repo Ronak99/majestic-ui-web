@@ -55,7 +55,7 @@ export default function Header() {
             ))}
           </div>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className={`hidden md:flex gap-2 items-center`}>
           <AuthButton />
           <Link
             href="https://github.com/Ronak99/majestic-ui-flutter/"
@@ -72,6 +72,9 @@ export default function Header() {
               <span className="text-white font-semibold">Contribute</span>
             </Button>
           </Link>
+        </div>
+        <div className={`absolute right-4 md:hidden items-center`}>
+          <AuthButton />
         </div>
       </div>
     </header>

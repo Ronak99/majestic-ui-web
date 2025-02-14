@@ -1,4 +1,4 @@
-import { RotatingLines } from "react-loader-spinner";
+import Image from "next/image";
 
 interface Props {
   size: "sm" | "md" | "lg";
@@ -7,22 +7,23 @@ interface Props {
 
 export default function Loading(props: Props) {
   const strokeWidth = "3";
-  let width = "20";
+  let width = 20;
 
   if (props.size == "lg") {
-    width = "45";
+    width = 45;
   } else if (props.size == "md") {
-    width = "30";
+    width = 30;
   }
 
   return (
     <center>
-      <RotatingLines
-        strokeColor={props.variant == "light" ? "white" : "black"}
-        strokeWidth={strokeWidth}
-        animationDuration="0.1"
+      <Image
+        src={
+          props.variant == "dark" ? "/loading-dark.svg" : "/loading-light.svg"
+        }
+        alt="loading"
         width={width}
-        visible={true}
+        height={width}
       />
     </center>
   );

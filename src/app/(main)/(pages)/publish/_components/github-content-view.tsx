@@ -71,6 +71,7 @@ export default function GithubContentView({
   } | null>(null);
   const [isScanning, setIsScanning] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  let isSigningOut = false;
 
   const initialize = async () => {
     setIsLoading(true);
@@ -83,6 +84,8 @@ export default function GithubContentView({
       setPathHistory([{ name: "All", path: "" }]);
     } catch (e) {
       if (e instanceof Error) {
+        if (isSigningOut) return;
+        isSigningOut = true;
         toast("Session Expired.", {
           description: "Your Github session was expired, please sign in again.",
         });

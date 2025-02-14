@@ -5,9 +5,11 @@ import { RegistryContent } from "@/util/types";
 import { useState } from "react";
 
 export default function PreviewAndCodeView({
-  registryContent,
+  previewUrl,
+  demo,
 }: {
-  registryContent?: RegistryContent;
+  previewUrl?: string;
+  demo?: string;
 }) {
   const [selectedTab, setSelectedTab] = useState<string>("preview");
 
@@ -40,11 +42,10 @@ export default function PreviewAndCodeView({
       </TabsList>
 
       <div className="w-full relative flex justify-center items-center">
-        <Card className={`${viewDimensions}  w-[370px] rounded-[60px]`}>
-          <iframe
-            className="h-full w-full rounded-[60px]"
-            src={registryContent!.preview_url}
-          />
+        <Card
+          className={`${viewDimensions}  w-[340px] md:w-[370px] rounded-[60px]`}
+        >
+          <iframe className="h-full w-full rounded-[60px]" src={previewUrl} />
         </Card>
         <Card
           className={`absolute top-0 rounded-lg z-10 w-full transition-opacity duration-500  ${viewDimensions} ${
@@ -53,11 +54,7 @@ export default function PreviewAndCodeView({
               : "opacity-0 pointer-events-none"
           }`}
         >
-          <CodeBlock
-            filename=""
-            code={registryContent?.demo ?? ""}
-            language="dart"
-          />
+          <CodeBlock filename="" code={demo ?? ""} language="dart" />
         </Card>
       </div>
     </Tabs>

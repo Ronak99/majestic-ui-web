@@ -6,26 +6,26 @@ interface RegistryState {
   registry: RegistryItem[];
   setAllRegitryItems: (data: RegistryItem[]) => void;
 
-  registryContentCache: Record<string, RegistryContent>;
-  getRegistryContent: (name: string) => RegistryContent | undefined;
-  addToRegistryContentCache: (content: RegistryContent) => void;
+  // registryContentCache: Record<string, RegistryContent>;
+  getRegistryContent: (name: string) => RegistryItem | undefined;
+  // addToRegistryContentCache: (content: RegistryContent) => void;
 }
 
 const useRegistry = create<RegistryState>()((set, get) => ({
   registry: [],
-  registryContentCache: {},
+  // registryContentCache: {},
 
   setAllRegitryItems: (data: RegistryItem[]) => set({ registry: data }),
 
-  getRegistryContent: (name: string) => get().registryContentCache[name],
+  getRegistryContent: (name: string) => get().registry.find((e) => e.name),
 
-  addToRegistryContentCache: (content: RegistryContent) =>
-    set((state) => ({
-      registryContentCache: {
-        ...state.registryContentCache,
-        [content.name]: content,
-      },
-    })),
+  // addToRegistryContentCache: (content: RegistryContent) =>
+  //   set((state) => ({
+  //     registryContentCache: {
+  //       ...state.registryContentCache,
+  //       [content.name]: content,
+  //     },
+  //   })),
 }));
 
 export default useRegistry;
