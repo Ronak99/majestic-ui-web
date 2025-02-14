@@ -42,7 +42,9 @@ export default function PreviewAndCodeView({
       </TabsList>
 
       <div className="w-full relative flex justify-center items-center">
-        <Card className={`${viewDimensions}  w-[370px] rounded-[60px]`}>
+        <Card
+          className={`${viewDimensions}  w-[340px] md:w-[370px] rounded-[60px]`}
+        >
           <iframe className="h-full w-full rounded-[60px]" src={previewUrl} />
         </Card>
         <Card
