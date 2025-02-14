@@ -28,10 +28,12 @@ export default function AuthButton() {
               <img
                 src={user.user_metadata.avatar_url}
                 alt="User avatar"
-                className="h-[22px] w-[22px] rounded-full"
+                className={`h-[30px] w-[30px] md:h-[22px] md:w-[22px] rounded-full`}
               />
             )}
-            {user.user_metadata?.user_name}
+            <span className="hidden md:block">
+              {user.user_metadata?.user_name}
+            </span>
           </Button>
           {/* <div
             className={`rounded-md h-full pl-4 pr-8 py-2 hover:bg-zinc-900 transition-colors duration-300 ${
