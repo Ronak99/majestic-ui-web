@@ -3,7 +3,7 @@ export default function NotFound({ componentName }: { componentName: string }) {
     <div
       className="rounded-xl border px-8 py-16 md: p-4 flex justify-center h-full items-center flex-col gap-1 bg-[url(/rdr.jpg)] bg-fixed bg-center bg-no-repeat relative"
       style={{
-        "background-image":
+        backgroundImage:
           "linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1)), url(/rdr.jpg)",
       }}
     >
