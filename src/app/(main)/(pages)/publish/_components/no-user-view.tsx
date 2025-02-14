@@ -14,7 +14,7 @@ export default function NoUserView() {
               Import Git Repository
             </p>
             <p className="text-muted-foreground text-sm">
-              Import a Flutter project / package
+              Import a Flutter package.
             </p>
           </div>
           <Button onClick={signIn}>
