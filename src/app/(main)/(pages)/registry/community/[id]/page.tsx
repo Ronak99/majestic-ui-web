@@ -15,9 +15,9 @@ import NotFound from "../../_component/not-found";
 export default function WidgetDetail() {
   const pathname = usePathname();
   const componentName = pathname.split("registry/")[1];
-  const { getRegistryContent } = useRegistry();
+  const { registry } = useRegistry();
 
-  const component = getRegistryContent(componentName);
+  const component = registry.find((r) => r.name == componentName);
   if (!component) {
     return <NotFound componentName={componentName} />;
   }
