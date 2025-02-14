@@ -7,8 +7,10 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import PreviewAndCodeView from "../_component/preview-and-code-view";
 import { ContentFile, RegistryContent, RegistryItem } from "@/util/types";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import useRegistry from "@/store/useRegistry";
+import { toast } from "sonner";
+import NotFound from "../_component/not-found";
 
 export default function WidgetDetail() {
   const pathname = usePathname();
@@ -16,12 +18,15 @@ export default function WidgetDetail() {
   const { registry } = useRegistry();
 
   const component = registry.find((r) => r.name == componentName);
+
+  if (!component) {
+    return <NotFound componentName={componentName} />;
+  }
+
   return <RenderComponent registry={component} />;
 }
 
-function RenderComponent({ registry }: { registry: RegistryItem | undefined }) {
-  if (!registry) return <p>Not found!</p>;
-
+function RenderComponent({ registry }: { registry: RegistryItem }) {
   return (
     <>
       <Heading

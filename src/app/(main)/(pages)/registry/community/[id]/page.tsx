@@ -10,6 +10,7 @@ import useRegistry from "@/store/useRegistry";
 import Heading from "@/app/(main)/_component/heading";
 import PreviewAndCodeView from "../../_component/preview-and-code-view";
 import DetailSectionView from "../../_component/detail-section-view";
+import NotFound from "../../_component/not-found";
 
 export default function WidgetDetail() {
   const pathname = usePathname();
@@ -17,12 +18,14 @@ export default function WidgetDetail() {
   const { getRegistryContent } = useRegistry();
 
   const component = getRegistryContent(componentName);
+  if (!component) {
+    return <NotFound componentName={componentName} />;
+  }
+
   return <RenderComponent registry={component} />;
 }
 
-function RenderComponent({ registry }: { registry: RegistryItem | undefined }) {
-  if (!registry) return <p>Not found!</p>;
-
+function RenderComponent({ registry }: { registry: RegistryItem }) {
   return (
     <>
       <Heading
