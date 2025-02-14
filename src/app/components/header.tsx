@@ -55,7 +55,7 @@ export default function Header() {
             ))}
           </div>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="absolute right-4 flex gap-2 items-center">
           <AuthButton />
           <Link
             href="https://github.com/Ronak99/majestic-ui-flutter/"
