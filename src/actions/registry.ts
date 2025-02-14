@@ -10,6 +10,19 @@ export async function getAllRegistryItems() {
       label: true,
       name: true,
       type: true,
+      content: {
+        select: {
+          created_at: true,
+          demo: true,
+          dependencies: true,
+          files: true,
+          id: true,
+          label: true,
+          name: true,
+          description: true,
+          preview_url: true,
+        },
+      },
     },
     where: {
       status: RegistryStatus.approved,
@@ -17,26 +30,26 @@ export async function getAllRegistryItems() {
   });
 }
 
-export async function getContent(name: string) {
-  try {
-    return await db.content.findFirst({
-      where: { name: name },
-      select: {
-        created_at: true,
-        demo: true,
-        dependencies: true,
-        files: true,
-        id: true,
-        label: true,
-        name: true,
-        description: true,
-        preview_url: true,
-      },
-    });
-  } catch (e) {
-    throw new Error(`An error occurred: ${e}`);
-  }
-}
+// export async function getContent(name: string) {
+//   try {
+//     return await db.content.findFirst({
+//       where: { name: name },
+//       select: {
+//         created_at: true,
+//         demo: true,
+//         dependencies: true,
+//         files: true,
+//         id: true,
+//         label: true,
+//         name: true,
+//         description: true,
+//         preview_url: true,
+//       },
+//     });
+//   } catch (e) {
+//     throw new Error(`An error occurred: ${e}`);
+//   }
+// }
 
 export async function getContentForCli(names: string[]) {
   return db.content.findMany({

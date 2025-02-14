@@ -3,7 +3,7 @@ import TextMorph from "@/app/components/text-morph";
 type Props = {
   currentTitle: string;
   previousTitle?: string;
-  subtitle: string;
+  subtitle?: string;
 };
 
 export default function Heading({

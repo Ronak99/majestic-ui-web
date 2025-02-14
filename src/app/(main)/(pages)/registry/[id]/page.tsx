@@ -6,45 +6,34 @@ import { CodeBlock } from "@/components/ui/code-block";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import PreviewAndCodeView from "../_component/preview-and-code-view";
-import Loading from "@/app/components/loading";
-import {
-  ComponentNotFoundError,
-  InvalidComponentNameError,
-  useRegistryContent,
-} from "@/hooks/useRegistryContent";
-import { ContentFile, RegistryContent } from "@/util/types";
+import { ContentFile, RegistryContent, RegistryItem } from "@/util/types";
+import { usePathname } from "next/navigation";
+import useRegistry from "@/store/useRegistry";
 
 export default function WidgetDetail() {
-  const { status, data: component, error } = useRegistryContent();
+  const pathname = usePathname();
+  const componentName = pathname.split("registry/")[1];
+  const { registry } = useRegistry();
 
-  if (status === "error" && !component) {
-    if (error instanceof ComponentNotFoundError) {
-      return <div>Component not found. Please check the URL.</div>;
-    }
-    if (error instanceof InvalidComponentNameError) {
-      return <div>Invalid component URL.</div>;
-    }
-    return <div>An error occurred while loading the component.</div>;
-  }
-
-  if (status == "loading") {
-    return <Loading size="lg" variant="light" />;
-  }
-
-  if (status === "success")
-    return component && <RenderComponent component={component} />;
+  const component = registry.find((r) => r.name == componentName);
+  return <RenderComponent registry={component} />;
 }
 
-function RenderComponent({ component }: { component: RegistryContent }) {
+function RenderComponent({ registry }: { registry: RegistryItem | undefined }) {
+  if (!registry) return <p>Not found!</p>;
+
   return (
     <>
       <Heading
-        currentTitle={component?.label ?? ""}
+        currentTitle={registry.label}
         previousTitle=""
-        subtitle={component?.description ?? ""}
+        subtitle={registry.content?.description}
       />
 
-      <PreviewAndCodeView registryContent={component} />
+      <PreviewAndCodeView
+        previewUrl={registry.content?.preview_url}
+        demo={registry.content?.demo}
+      />
 
       {/* Installation */}
       <DetailSectionView heading="Installation">
@@ -57,7 +46,7 @@ function RenderComponent({ component }: { component: RegistryContent }) {
           <CodeBlock
             language="bash"
             filename=""
-            code={`majestic_ui add ${component?.name}`}
+            code={`majestic_ui add ${registry.content?.name}`}
           />
         </div>
       </DetailSectionView>
@@ -68,7 +57,7 @@ function RenderComponent({ component }: { component: RegistryContent }) {
           language="dart"
           filename=""
           tabs={
-            (component.files as ContentFile[]).map((file) => {
+            (registry.content?.files as ContentFile[]).map((file) => {
               return {
                 name: file.name,
                 code: file.content,
@@ -82,11 +71,11 @@ function RenderComponent({ component }: { component: RegistryContent }) {
       {/* Dependencies */}
       <DetailSectionView heading="Dependencies">
         <>
-          {component?.dependencies &&
-          (component?.dependencies as string[]).length ? (
+          {registry.content?.dependencies &&
+          (registry.content?.dependencies as string[]).length ? (
             <div className="flex flex-col gap-4">
               <div className="flex flex-row gap-4">
-                {(component?.dependencies as string[]).map((dep) => (
+                {(registry.content?.dependencies as string[]).map((dep) => (
                   <Link
                     key={dep}
                     href={`https://pub.dev/packages/${dep}`}
