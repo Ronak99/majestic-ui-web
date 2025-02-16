@@ -78,7 +78,7 @@ export async function createRegistryAndContent(
     data: {
       label: publishData.label,
       name: publishData.name,
-      type: "widget",
+      type: publishData.type,
       authorId: publishData.authorId,
       status: RegistryStatus.under_review,
       content: {
@@ -93,6 +93,4 @@ export async function createRegistryAndContent(
       },
     },
   });
-
-  console.log(response);
 }
