@@ -44,6 +44,7 @@ export default function PublishForm({
     defaultValues: {
       name: scanResult.name,
       label: scanResult.label,
+      preview_url: scanResult.previewUrl,
       type: "widget",
     },
   });

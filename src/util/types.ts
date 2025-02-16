@@ -73,6 +73,7 @@ export type GithubScanResult = {
   description: string;
   dependencies: string[];
   files: ScannedFile[];
+  previewUrl: string | undefined;
 };
 
 export type PublishWidgetProps = {

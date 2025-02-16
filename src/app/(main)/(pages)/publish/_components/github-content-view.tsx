@@ -44,6 +44,7 @@ type PubspecContent = {
   label?: string;
   dependencies: Record<string, string | PubspecDependency>;
   dependency_names: string[];
+  preview_url?: string;
 };
 
 type RepoItem = {
@@ -327,6 +328,7 @@ export default function GithubContentView({
         label: pubspecInfo.label,
         name: "community/" + pubspecInfo.name,
         files: scannedFiles,
+        previewUrl: pubspecInfo.preview_url,
       });
 
       return scannedFiles;
@@ -389,6 +391,7 @@ export default function GithubContentView({
         description: parsedContent.description,
         label: parsedContent.label,
         dependencies: parsedContent.dependencies,
+        preview_url: parsedContent.preview_url,
         dependency_names: dependencyList,
       };
     } catch (error) {
