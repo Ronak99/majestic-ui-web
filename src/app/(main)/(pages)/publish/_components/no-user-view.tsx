@@ -28,7 +28,7 @@ export default function NoUserView() {
         width="100%"
         height="315"
         className="mt-4 border rounded-3xl"
-        src="https://www.youtube.com/embed/tYcU0XjLBHI?si=PlUyPgVW3bEZ36SW&rel=0"
+        src="https://www.youtube.com/embed/hP0XgL7jMSQ?si=ZXRWR_OqUyS1Q_uq"
         title="YouTube video player"
         // @ts-ignore
         frameborder="0"
