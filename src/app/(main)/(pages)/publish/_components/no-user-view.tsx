@@ -14,7 +14,7 @@ export default function NoUserView() {
               Import Git Repository
             </p>
             <p className="text-muted-foreground text-sm">
-              Import a Flutter project / package
+              Import a Flutter package.
             </p>
           </div>
           <Button onClick={signIn}>
@@ -28,7 +28,7 @@ export default function NoUserView() {
         width="100%"
         height="315"
         className="mt-4 border rounded-3xl"
-        src="https://www.youtube.com/embed/tYcU0XjLBHI?si=PlUyPgVW3bEZ36SW&rel=0"
+        src="https://www.youtube.com/embed/oiiAZcGAeNE?si=fdz9s_DQwaijhIvL"
         title="YouTube video player"
         // @ts-ignore
         frameborder="0"
