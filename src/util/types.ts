@@ -38,7 +38,7 @@ export type RegistryContent = Prisma.contentGetPayload<{
 
 export type ContentFile = {
   name: string;
-  filepath: string;
+  file_path: string;
   content: string;
 };
 

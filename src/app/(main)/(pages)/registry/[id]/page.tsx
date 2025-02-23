@@ -11,6 +11,8 @@ import { redirect, usePathname } from "next/navigation";
 import useRegistry from "@/store/useRegistry";
 import { toast } from "sonner";
 import NotFound from "../_component/not-found";
+import { Button } from "@/components/ui/button";
+import CodeEditor from "@/components/ui/code-editor";
 
 export default function WidgetDetail() {
   const pathname = usePathname();
@@ -35,10 +37,32 @@ function RenderComponent({ registry }: { registry: RegistryItem }) {
         subtitle={registry.content?.description}
       />
 
-      <PreviewAndCodeView
-        previewUrl={registry.content?.preview_url}
-        demo={registry.content?.demo}
-      />
+      {registry.type !== "architecture" && (
+        <PreviewAndCodeView
+          previewUrl={registry.content?.preview_url}
+          demo={registry.content?.demo}
+        />
+      )}
+
+      {registry.type === "architecture" && (
+        <DetailSectionView heading="Architecture">
+          <CodeEditor
+            language="dart"
+            highlightLines={[]}
+            architectureName={registry.name}
+            files={
+              (registry.content?.files as ContentFile[]).map((file) => {
+                return {
+                  name: file.name,
+                  file_path: file.file_path,
+                  content: file.content,
+                  language: "dart",
+                };
+              }) ?? []
+            }
+          />
+        </DetailSectionView>
+      )}
 
       {/* Installation */}
       <DetailSectionView heading="Installation">
@@ -57,21 +81,23 @@ function RenderComponent({ registry }: { registry: RegistryItem }) {
       </DetailSectionView>
 
       {/* Usage */}
-      <DetailSectionView heading="Setup Manually">
-        <CodeBlock
-          language="dart"
-          filename=""
-          tabs={
-            (registry.content?.files as ContentFile[]).map((file) => {
-              return {
-                name: file.name,
-                code: file.content,
-                language: "dart",
-              };
-            }) ?? []
-          }
-        />
-      </DetailSectionView>
+      {registry.type !== "architecture" && (
+        <DetailSectionView heading="Setup Manually">
+          <CodeBlock
+            language="dart"
+            filename=""
+            tabs={
+              (registry.content?.files as ContentFile[]).map((file) => {
+                return {
+                  name: file.name,
+                  code: file.content,
+                  language: "dart",
+                };
+              }) ?? []
+            }
+          />
+        </DetailSectionView>
+      )}
 
       {/* Dependencies */}
       <DetailSectionView heading="Dependencies">
