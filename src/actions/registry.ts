@@ -10,6 +10,7 @@ export async function getAllRegistryItems() {
       label: true,
       name: true,
       type: true,
+      githubUsername: true,
       content: {
         select: {
           created_at: true,

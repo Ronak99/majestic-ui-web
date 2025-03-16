@@ -6,6 +6,7 @@ export type RegistryItem = Prisma.registryGetPayload<{
     name: true;
     label: true;
     type: true;
+    githubUsername: true;
     content: {
       select: {
         created_at: true;
