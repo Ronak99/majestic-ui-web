@@ -35,6 +35,7 @@ function RenderComponent({ registry }: { registry: RegistryItem }) {
         currentTitle={registry.label}
         previousTitle=""
         subtitle={registry.content?.description}
+        githubUsername={registry.githubUsername}
       />
 
       {registry.type !== "architecture" && (
