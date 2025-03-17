@@ -9,6 +9,7 @@
     "react/no-unescaped-entities": "off",
     "@next/next/no-img-element": "off",
     "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/prefer-const": "off"
+    "@typescript-eslint/prefer-const": "off",
+    "prefer-const": "off"
   }
 }
