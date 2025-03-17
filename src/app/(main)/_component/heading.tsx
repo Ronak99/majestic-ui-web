@@ -5,7 +5,7 @@ type Props = {
   currentTitle: string;
   previousTitle?: string;
   subtitle?: string;
-  githubUsername: string | null;
+  githubUsername?: string | null;
 };
 
 export default function Heading({
@@ -24,7 +24,7 @@ export default function Heading({
             {subtitle}
           </h4>
         </div>
-        <AuthorView githubUsername={githubUsername} />
+        {githubUsername && <AuthorView githubUsername={githubUsername} />}
       </div>
     </>
   );
