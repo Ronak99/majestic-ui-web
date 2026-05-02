@@ -1,0 +1,63 @@
+---
+title: Star Rush Background
+description: A moving star field background for expressive Flutter screens.
+type: widget
+preview_url: https://majestic-ui-flutter.web.app/star_rush_background
+cli: majestic_ui add star_rush_background
+dependencies: []
+files:
+  - name: Star Rush Background
+    path: lib/widgets/star_rush_background.dart
+    language: dart
+    code: |
+      import 'package:flutter/material.dart';
+
+      class StarRushBackground extends StatelessWidget {
+        const StarRushBackground({super.key, required this.child});
+
+        final Widget child;
+
+        @override
+        Widget build(BuildContext context) {
+          return DecoratedBox(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xFF09090B), Color(0xFF18181B)],
+              ),
+            ),
+            child: child,
+          );
+        }
+      }
+---
+
+Use this page as the template for adding more widgets. The structured fields at
+the top of the file drive the preview, CLI command, dependencies, and source
+file sections automatically.
+
+## Add Another Widget
+
+Create another MDX file in `content/docs/widgets` and add it to
+`content/docs/widgets/meta.json`.
+
+```mdx
+---
+title: My Widget
+description: A short description for the sidebar and metadata.
+type: widget
+preview_url: https://example.com/my-widget-preview
+cli: majestic_ui add my_widget
+dependencies:
+  - flutter_animate
+files:
+  - name: My Widget
+    path: lib/widgets/my_widget.dart
+    language: dart
+    code: |
+      class MyWidget {}
+---
+
+Write usage notes here.
+```

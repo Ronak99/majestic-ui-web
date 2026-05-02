@@ -2,13 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
-import { Analytics } from "@vercel/analytics/react";
-import Footer from "./components/footer";
-import DataLoader from "./components/data-loader";
-import Header from "./components/header";
-import { supabase } from "@/lib/supabase/client";
-import { useAuthInitializer } from "@/hooks/useAuthInitializer";
-import { Toaster } from "sonner";
+import { RootProvider } from "fumadocs-ui/provider/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.majesticui.com"),
   title: "Majestic UI",
   description: "Beautifully designed Flutter Widgets.",
   keywords: ["majestic ui", "flutter", "android", "ios"],
@@ -49,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -59,14 +54,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex flex-col min-h-svh bg-background">
-            <Header />
-            {children}
-            {/* <Analytics /> */}
-            <DataLoader />
-            <Footer />
-            <Toaster theme="dark" />
-          </div>
+          <RootProvider>{children}</RootProvider>
         </ThemeProvider>
       </body>
     </html>

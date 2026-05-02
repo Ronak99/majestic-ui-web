@@ -6,11 +6,12 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Header from "./components/header";
 import Image from "next/image";
+import Footer from "./components/footer";
 
 export default function Home() {
-  const words = ["reliable", "beautiful", "functional", "tested"];
   return (
-    <>
+    <div className="flex min-h-svh flex-col bg-background">
+      <Header />
       <BackgroundBeams />
 
       <motion.div
@@ -32,12 +33,13 @@ export default function Home() {
           your projects.
           <br />
         </div>
-        <Link href="/introduction" className="mt-12">
+        <Link href="/docs/introduction" className="mt-12">
           <Button className="md:py-6 md:px-20 px-24 py-6 rounded-xl bg-white/90 text-black border border-black text-md font-semibold">
             Get Started
           </Button>
         </Link>
       </motion.div>
-    </>
+      <Footer />
+    </div>
   );
 }

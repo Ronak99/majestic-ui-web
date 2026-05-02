@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Majestic UI Web
+
+Lightweight documentation site for the `majestic_ui` Flutter widget CLI. The
+landing page stays in `src/app/page.tsx`; documentation is powered by Fumadocs
+and plain MDX files in `content/docs`.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Editing Docs
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+General docs live in `content/docs`. Widget docs live in `content/docs/widgets`.
+To add a widget:
 
-## Learn More
+1. Add a new `content/docs/widgets/my-widget.mdx` file.
+2. Add the page slug to `content/docs/widgets/meta.json`.
+3. Fill in frontmatter such as `preview_url`, `cli`, `dependencies`, and
+   `files`.
 
-To learn more about Next.js, take a look at the following resources:
+See `content/docs/widgets/star-rush-background.mdx` for the widget template.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `npm run dev` starts the local docs site.
+- `npm run build` builds the static landing and docs pages.
+- `npm run lint` runs ESLint.

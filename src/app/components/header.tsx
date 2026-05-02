@@ -5,8 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Layers } from "lucide-react";
-import MenuButton from "./menu-button";
-import AuthButton from "./auth-button";
 
 export default function Header() {
   const pathname = usePathname();
@@ -21,9 +19,6 @@ export default function Header() {
         }`}
       >
         <div className="flex w-full items-center gap-8">
-          <div className="absolute block md:hidden z-10">
-            <MenuButton />
-          </div>
           <Link
             className="flex max-md:flex-grow justify-center items-center  gap-2"
             href={"/"}
@@ -37,17 +32,16 @@ export default function Header() {
             {[
               {
                 label: "Introduction",
-                root: "introduction",
-                link: "introduction",
+                root: "/docs/introduction",
+                link: "/docs/introduction",
               },
-              { label: "Docs", root: "installation", link: "installation" },
-              { label: "Publish", root: "publish", link: "publish" },
+              { label: "Docs", root: "/docs", link: "/docs" },
             ].map((e) => (
               <Link
-                href={`/${e.link}`}
+                href={e.link}
                 key={e.root}
                 className={`text-muted-foreground hover:text-white text-sm ${
-                  pathname.includes(e.root) ? "text-white" : ""
+                  pathname.startsWith(e.root) ? "text-white" : ""
                 }`}
               >
                 {e.label}
@@ -56,7 +50,6 @@ export default function Header() {
           </div>
         </div>
         <div className={`hidden md:flex gap-2 items-center`}>
-          <AuthButton />
           <Link
             href="https://github.com/Ronak99/majestic-ui-flutter/"
             target="_blank"
@@ -72,9 +65,6 @@ export default function Header() {
               <span className="text-white font-semibold">Contribute</span>
             </Button>
           </Link>
-        </div>
-        <div className={`absolute right-4 md:hidden items-center`}>
-          <AuthButton />
         </div>
       </div>
     </header>
