@@ -1,0 +1,142 @@
+---
+title: |-
+  Basic Provider
+description: |-
+  Simplest Provider architecture that you can import as soon as a new flutter project is created.
+type: |-
+  architecture
+cli: |-
+  majestic_ui add basic_provider_architecture
+dependencies:
+  - |-
+    provider
+files:
+  - name: |-
+      main.dart
+    path: |-
+      lib/majestic/arch/basic_provider_architecture/main.dart
+    language: |-
+      dart
+    code: |
+      import './registry.dart';
+      import './ui/home_page.dart';
+      import 'package:flutter/material.dart';
+
+      void main() {
+        runApp(const MyApp());
+      }
+
+      class MyApp extends StatelessWidget {
+        const MyApp({super.key});
+
+        @override
+        Widget build(BuildContext context) {
+          return const ProviderRegistry(
+            child: HomePage(),
+          );
+        }
+      }
+  - name: |-
+      registry.dart
+    path: |-
+      lib/majestic/arch/basic_provider_architecture/registry.dart
+    language: |-
+      dart
+    code: |
+      import 'package:flutter/material.dart';
+      import 'package:provider/provider.dart';
+
+      import 'state/counter_provider.dart';
+
+      class ProviderRegistry extends StatelessWidget {
+        final Widget child;
+        const ProviderRegistry({super.key, required this.child});
+
+        @override
+        Widget build(BuildContext context) {
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider<CounterProvider>(
+                create: (_) => CounterProvider(),
+              ),
+            ],
+            child: child,
+          );
+        }
+      }
+  - name: |-
+      counter_provider.dart
+    path: |-
+      lib/majestic/arch/basic_provider_architecture/state/counter_provider.dart
+    language: |-
+      dart
+    code: |
+      import 'package:flutter/material.dart';
+
+      class CounterProvider extends ChangeNotifier {
+        int _count = 0;
+        int get count => _count;
+
+        void updateCount() {
+          _count += 1;
+          notifyListeners();
+        }
+      }
+  - name: |-
+      home_page.dart
+    path: |-
+      lib/majestic/arch/basic_provider_architecture/ui/home_page.dart
+    language: |-
+      dart
+    code: |
+      import 'package:flutter/material.dart';
+
+      import 'widgets/counter.dart';
+
+      class HomePage extends StatelessWidget {
+        const HomePage({super.key});
+
+        @override
+        Widget build(BuildContext context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Provider Architecture'),
+            ),
+            body: const SizedBox(
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Counter(),
+                ],
+              ),
+            ),
+          );
+        }
+      }
+  - name: |-
+      counter.dart
+    path: |-
+      lib/majestic/arch/basic_provider_architecture/ui/widgets/counter.dart
+    language: |-
+      dart
+    code: |
+      import 'package:flutter/material.dart';
+      import 'package:provider/provider.dart';
+
+      import '../../state/counter_provider.dart';
+
+      class Counter extends StatelessWidget {
+        const Counter({super.key});
+
+        @override
+        Widget build(BuildContext context) {
+          final counterProvider = Provider.of<CounterProvider>(context);
+
+          return Text(
+            counterProvider.count.toString(),
+          );
+        }
+      }
+---
+

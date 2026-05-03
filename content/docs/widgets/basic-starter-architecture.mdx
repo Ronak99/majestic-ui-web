@@ -1,0 +1,71 @@
+---
+title: |-
+  Starter
+description: |-
+  Extremely basic setup that you can import as soon as a new flutter project is created.
+type: |-
+  architecture
+cli: |-
+  majestic_ui add basic_starter_architecture
+dependencies: []
+files:
+  - name: |-
+      main.dart
+    path: |-
+      lib/majestic/arch/basic_starter_architecture/main.dart
+    language: |-
+      dart
+    code: |
+      import 'package:flutter/material.dart';
+
+      import 'ui/home_page.dart';
+
+      void main() {
+        runApp(const MyApp());
+      }
+
+      class MyApp extends StatelessWidget {
+        const MyApp({super.key});
+
+        @override
+        Widget build(BuildContext context) {
+          return const MaterialApp(
+            title: 'Basic Starter App',
+            debugShowCheckedModeBanner: false,
+            home: HomePage(),
+          );
+        }
+      }
+  - name: |-
+      home_page.dart
+    path: |-
+      lib/majestic/arch/basic_starter_architecture/ui/home_page.dart
+    language: |-
+      dart
+    code: |
+      import 'package:flutter/material.dart';
+
+      class HomePage extends StatelessWidget {
+        const HomePage({super.key});
+
+        @override
+        Widget build(BuildContext context) {
+          return Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: const Text("Home"),
+            ),
+            body: const SizedBox(
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  /* Start adding your UI code */
+                ],
+              ),
+            ),
+          );
+        }
+      }
+---
+

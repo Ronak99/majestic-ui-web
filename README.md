@@ -25,6 +25,17 @@ To add a widget:
 
 See `content/docs/widgets/star-rush-background.mdx` for the widget template.
 
+## Import from CSV
+
+To regenerate widget MDX from a Prisma/content export (columns: `name`, `label`,
+`description`, `dependencies`, `demo`, `files`, `preview_url`):
+
+```bash
+node scripts/import-content-csv.mjs /path/to/content_rows.csv
+```
+
+This overwrites matching files under `content/docs/widgets/` and refreshes `meta.json`.
+
 ## Scripts
 
 - `npm run dev` starts the local docs site.

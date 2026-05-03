@@ -1,4 +1,18 @@
 {
   "title": "Widgets",
-  "pages": ["star-rush-background"]
+  "pages": [
+    "animated-button",
+    "auth-page",
+    "avatar",
+    "basic-provider-architecture",
+    "basic-starter-architecture",
+    "categories-page",
+    "community",
+    "grid-background",
+    "landing-page",
+    "multi-choice-picker",
+    "profile-page",
+    "star-rush-background",
+    "welcome-page"
+  ]
 }

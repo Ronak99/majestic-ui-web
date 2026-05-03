@@ -1,0 +1,766 @@
+---
+title: |-
+  Categories Page
+description: |-
+  Categories Page with baked in state management.
+type: |-
+  widget
+preview_url: |-
+  https://majestic-flutter-web.web.app/#/categories_page
+cli: |-
+  majestic_ui add categories_page
+dependencies:
+  - |-
+    provider
+files:
+  - name: |-
+      categories_page.dart
+    path: |-
+      lib/majestic/ui/categories_page/categories_page.dart
+    language: |-
+      dart
+    code: |
+      import 'package:flutter/material.dart';
+      import 'package:provider/provider.dart';
+
+      import './state/categories_state_provider.dart';
+      import './ui/sections/main/categories_main_view.dart';
+      import './utils/dimensions.dart';
+      import './ui/sections/left/categories_left_panel.dart';
+
+      class CategoriesPage extends StatelessWidget {
+        const CategoriesPage({super.key});
+
+        @override
+        Widget build(BuildContext context) {
+          return Scaffold(
+            body: SizedBox(
+              child: ChangeNotifierProvider(
+                create: (_) => CategoriesStateProvider(),
+                child: const Stack(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(width: leftPanelWidth),
+                        Expanded(
+                          child: CategoriesMainPanel(),
+                        ),
+                      ],
+                    ),
+                    CategoriesLeftPanel(),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+      }
+  - name: |-
+      categories_left_panel.dart
+    path: |-
+      lib/majestic/ui/categories_page/ui/sections/left/categories_left_panel.dart
+    language: |-
+      dart
+    code: |
+      import 'package:flutter/material.dart';
+      import 'package:provider/provider.dart';
+
+      import '../../../state/categories_state_provider.dart';
+      import '../../../utils/dimensions.dart';
+      import '../../../utils/colors.dart';
+
+      class CategoriesLeftPanel extends StatelessWidget {
+        const CategoriesLeftPanel({super.key});
+
+        @override
+        Widget build(BuildContext context) {
+          final categoriesStateProvider =
+              Provider.of<CategoriesStateProvider>(context);
+
+          final safeArePaddingTop = MediaQuery.of(context).padding.top;
+
+          const double imageSize = 50;
+          const double itemHeight = 104;
+          const double handleWidth = 5;
+
+          return Container(
+            width: leftPanelWidth,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey[300]!,
+                  offset: const Offset(1, 0),
+                  blurRadius: 2,
+                )
+              ],
+            ),
+            child: Stack(
+              children: [
+                ListView(
+                  children: categoriesStateProvider.allCategories
+                      .map(
+                        (categoryItem) => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () => categoriesStateProvider
+                                    .updateCategory(categoryItem),
+                                child: Container(
+                                  height: itemHeight,
+                                  color: Colors.transparent,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: categoriesStateProvider
+                                                      .selectedCategory ==
+                                                  categoryItem
+                                              ? const Color(0xffceffda)
+                                              : lightBackgroundColor,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        height: imageSize,
+                                        width: imageSize,
+                                        margin: const EdgeInsets.only(bottom: 4),
+                                      ),
+                                      Text(
+                                        categoryItem.name,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          height: 1.1,
+                                          fontWeight: categoriesStateProvider
+                                                      .selectedCategory ==
+                                                  categoryItem
+                                              ? FontWeight.w600
+                                              : FontWeight.normal,
+                                          fontSize: 11,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                      .toList(),
+                ),
+                // if (categoriesStateProvider.isAnimating)
+                //   AnimatedPositioned(
+                //     right: 0,
+                //     top: (itemHeight *
+                //             categoriesStateProvider.getSelectedCategoryIndex) +
+                //         safeArePaddingTop,
+                //     duration: const Duration(milliseconds: 300),
+                //     curve: Curves.easeInOut,
+                //     child: Container(
+                //       height: itemHeight,
+                //       width: handleWidth,
+                //       decoration: BoxDecoration(
+                //         color: Colors.green[800],
+                //         borderRadius: const BorderRadius.horizontal(
+                //           left: Radius.circular(12),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+              ],
+            ),
+          );
+        }
+      }
+  - name: |-
+      categories_main_view.dart
+    path: |-
+      lib/majestic/ui/categories_page/ui/sections/main/categories_main_view.dart
+    language: |-
+      dart
+    code: |
+      import 'package:flutter/material.dart';
+
+      import '../../../data/data.dart';
+      import '../../../models/product.dart';
+      import '../../../utils/colors.dart';
+      import '../../../utils/dimensions.dart';
+
+      class CategoriesMainPanel extends StatelessWidget {
+        const CategoriesMainPanel({super.key});
+
+        @override
+        Widget build(BuildContext context) {
+          return SafeArea(
+            child: Container(
+              width: double.infinity,
+              color: const Color(0xfffffefe),
+              child: Column(
+                children: [
+                  _buildFilters(),
+                  const Expanded(
+                    child: ProductGrid(),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+        Widget _buildFilters() {
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(
+                vertical: 4, horizontal: defaultViewPadding),
+            child: Row(
+                children: filters
+                    .map(
+                      (item) => Container(
+                        margin: const EdgeInsets.only(right: 12),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey[400]!,
+                              offset: const Offset(0, 0),
+                              blurRadius: 2,
+                            )
+                          ],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: EdgeInsets.only(
+                          left: 12,
+                          right: item.isDropdown ? 4 : 12,
+                          top: item.isDropdown ? 2 : 4,
+                          bottom: item.isDropdown ? 2 : 4,
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              item.label,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            if (item.isDropdown)
+                              const Icon(
+                                Icons.arrow_drop_down,
+                                size: 24,
+                              ),
+                          ],
+                        ),
+                      ),
+                    )
+                    .toList()),
+          );
+        }
+      }
+
+      class ProductGrid extends StatelessWidget {
+        const ProductGrid({super.key});
+
+        @override
+        Widget build(BuildContext context) {
+          return GridView.builder(
+            padding: const EdgeInsets.all(defaultViewPadding),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.5,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 6,
+            ),
+            itemBuilder: (context, index) =>
+                ProductCard(product: dummyProducts[index]),
+            itemCount: dummyProducts.length,
+          );
+        }
+      }
+
+      class ProductCard extends StatelessWidget {
+        final Product product;
+
+        const ProductCard({
+          super.key,
+          required this.product,
+        });
+
+        @override
+        Widget build(BuildContext context) {
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.white,
+            ),
+            child: LayoutBuilder(builder: (context, constraints) {
+              return Column(
+                mainAxisSize: MainAxisSize.min, // Use minimum space needed
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Image section with aspect ratio
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    child: Container(
+                      width: double.infinity,
+                      height: 120,
+                      color: lightBackgroundColor,
+                      // child: Image.network(
+                      //   product.imageUrl,
+                      //   fit: BoxFit.cover,
+                      // ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  // Product details section
+                  Column(
+                    mainAxisSize: MainAxisSize.min, // Use minimum space needed
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          CustomChip(text: '${product.weight}g'),
+                          const SizedBox(width: 4),
+                          const CustomChip(text: 'Chocolate Chip'),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        product.name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      // Rating row
+                      Row(
+                        children: [
+                          ...List.generate(
+                            5,
+                            (e) => const Icon(
+                              Icons.star,
+                              size: 14,
+                              color: Colors.amber,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          const Text(
+                            '(30,895)',
+                            style: TextStyle(fontSize: 10),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      // Delivery time row
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.access_time,
+                            size: 10,
+                            color: Colors.green[800]!,
+                          ),
+                          Text(
+                            ' ${product.deliveryTime} MINS',
+                            style: TextStyle(
+                              color: Colors.grey[800],
+                              fontSize: 8,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      // Price row
+                      Row(
+                        children: [
+                          Expanded(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerLeft,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    '₹${product.price}',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    'MRP ',
+                                    style: TextStyle(
+                                      color: Colors.grey[700],
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                  Text(
+                                    '₹${product.mrp}',
+                                    style: TextStyle(
+                                      decoration: TextDecoration.lineThrough,
+                                      color: Colors.grey[700],
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            }),
+          );
+        }
+      }
+
+      class CustomChip extends StatelessWidget {
+        final String text;
+
+        const CustomChip({super.key, required this.text});
+
+        @override
+        Widget build(BuildContext context) {
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              color: lightBackgroundColor,
+            ),
+            padding: const EdgeInsets.all(4),
+            child: Text(
+              text,
+              style: TextStyle(
+                color: Colors.blue[900],
+                fontWeight: FontWeight.w700,
+                fontSize: 9,
+              ),
+            ),
+          );
+        }
+      }
+  - name: |-
+      category_gridview_item.dart
+    path: |-
+      lib/majestic/ui/categories_page/ui/sections/main/widgets/category_gridview_item.dart
+    language: |-
+      dart
+    code: |
+
+  - name: |-
+      colors.dart
+    path: |-
+      lib/majestic/ui/categories_page/utils/colors.dart
+    language: |-
+      dart
+    code: |
+      import 'dart:ui';
+
+      const lightBackgroundColor = const Color(0xfff3f5f7);
+  - name: |-
+      dimensions.dart
+    path: |-
+      lib/majestic/ui/categories_page/utils/dimensions.dart
+    language: |-
+      dart
+    code: |
+      const double leftPanelWidth = 78;
+      const double defaultViewPadding = 12;
+  - name: |-
+      product.dart
+    path: |-
+      lib/majestic/ui/categories_page/models/product.dart
+    language: |-
+      dart
+    code: |
+      class Product {
+        final String name;
+        final String imageUrl;
+        final double price;
+        final double mrp;
+        final double weight;
+        final String? pieceCount;
+        final double rating;
+        final int reviewCount;
+        final int deliveryTime;
+        final double discount;
+        final bool isPremium;
+
+        Product({
+          required this.name,
+          required this.imageUrl,
+          required this.price,
+          required this.mrp,
+          required this.weight,
+          this.pieceCount,
+          required this.rating,
+          required this.reviewCount,
+          required this.deliveryTime,
+          required this.discount,
+          this.isPremium = false,
+        });
+      }
+  - name: |-
+      category_item.dart
+    path: |-
+      lib/majestic/ui/categories_page/models/category_item.dart
+    language: |-
+      dart
+    code: |
+      class CategoryItem {
+        final String image;
+        final String name;
+        final String id;
+
+        CategoryItem({required this.image, required this.name, required this.id});
+      }
+  - name: |-
+      filter.dart
+    path: |-
+      lib/majestic/ui/categories_page/models/filter.dart
+    language: |-
+      dart
+    code: |
+      enum FilterType { dropdown, normal }
+
+      class Filter {
+        String label;
+        String value;
+        FilterType filterType;
+
+        Filter({
+          required this.label,
+          required this.value,
+          required this.filterType,
+        });
+
+        bool get isDropdown => filterType == FilterType.dropdown;
+      }
+  - name: |-
+      categories_state_provider.dart
+    path: |-
+      lib/majestic/ui/categories_page/state/categories_state_provider.dart
+    language: |-
+      dart
+    code: |
+      import 'package:flutter/material.dart';
+
+      import '../data/data.dart';
+      import '../models/category_item.dart';
+
+      class CategoriesStateProvider extends ChangeNotifier {
+        List<CategoryItem> _allCategories = [];
+        List<CategoryItem> get allCategories => _allCategories;
+
+        late CategoryItem _selectedCategory;
+        CategoryItem get selectedCategory => _selectedCategory;
+
+        bool isAnimating = false;
+
+        CategoriesStateProvider() {
+          _initialize();
+        }
+
+        void _initialize() async {
+          _allCategories = categoryItems;
+          _selectedCategory = _allCategories.first;
+          notifyListeners();
+        }
+
+        void updateCategory(CategoryItem categoryItem) {
+          _selectedCategory = categoryItem;
+          notifyListeners();
+        }
+
+        int get getSelectedCategoryIndex => allCategories.indexOf(selectedCategory);
+      }
+  - name: |-
+      data.dart
+    path: |-
+      lib/majestic/ui/categories_page/data/data.dart
+    language: |-
+      dart
+    code: |
+      import '../models/category_item.dart';
+      import '../models/filter.dart';
+      import '../models/product.dart';
+
+      final categoryItems = <CategoryItem>[
+        CategoryItem(
+          image: 'https://picsum.photos/50',
+          name: 'All',
+          id: 'all',
+        ),
+        CategoryItem(
+          image: 'https://picsum.photos/50',
+          name: 'Fresh Vegetables',
+          id: 'fresh_vegetables',
+        ),
+        CategoryItem(
+          image: 'https://picsum.photos/50',
+          name: 'Fresh Fruits',
+          id: 'fruits',
+        ),
+        CategoryItem(
+          image: 'https://picsum.photos/50',
+          name: 'Exotics',
+          id: 'exotics',
+        ),
+        CategoryItem(
+          image: 'https://picsum.photos/50',
+          name: 'Coriander & Others',
+          id: 'others',
+        ),
+        CategoryItem(
+          image: 'https://picsum.photos/50',
+          name: 'Flowers & Leaves',
+          id: 'flowers',
+        ),
+        CategoryItem(
+          image: 'https://picsum.photos/50',
+          name: 'Seasonal',
+          id: 'seasonal',
+        ),
+        CategoryItem(
+          image: 'https://picsum.photos/50',
+          name: 'Freshly Cut & Sprouts',
+          id: 'cut_and_sprouts',
+        ),
+        CategoryItem(
+          image: 'https://picsum.photos/50',
+          name: 'Frozen Veg',
+          id: 'frozen_veg',
+        ),
+      ];
+
+      // Dummy data for demonstration
+      final dummyProducts = [
+        Product(
+          name:
+              'Cadbury Studio Assorted Flavours Signature Pralines Chocolate Gift Pack',
+          imageUrl: 'https://picsum.photos/180',
+          price: 716,
+          mrp: 1000,
+          weight: 234,
+          pieceCount: '18',
+          rating: 4.2,
+          reviewCount: 224,
+          deliveryTime: 10,
+          discount: 28,
+          isPremium: true,
+        ),
+        Product(
+          name: 'Kinder Schoko Bons Crispy',
+          imageUrl: 'https://example.com/chocolate2.jpg',
+          price: 37,
+          mrp: 40,
+          weight: 22.4,
+          rating: 4.8,
+          reviewCount: 5690,
+          deliveryTime: 10,
+          discount: 7,
+        ),
+        Product(
+          name:
+              'Cadbury Studio Assorted Flavours Signature Pralines Chocolate Gift Pack',
+          imageUrl: 'https://example.com/chocolate1.jpg',
+          price: 716,
+          mrp: 1000,
+          weight: 234,
+          pieceCount: '18',
+          rating: 4.2,
+          reviewCount: 224,
+          deliveryTime: 10,
+          discount: 28,
+          isPremium: true,
+        ),
+        Product(
+          name: 'Kinder Schoko Bons Crispy',
+          imageUrl: 'https://example.com/chocolate2.jpg',
+          price: 37,
+          mrp: 40,
+          weight: 22.4,
+          rating: 4.8,
+          reviewCount: 5690,
+          deliveryTime: 10,
+          discount: 7,
+        ),
+        Product(
+          name:
+              'Cadbury Studio Assorted Flavours Signature Pralines Chocolate Gift Pack',
+          imageUrl: 'https://example.com/chocolate1.jpg',
+          price: 716,
+          mrp: 1000,
+          weight: 234,
+          pieceCount: '18',
+          rating: 4.2,
+          reviewCount: 224,
+          deliveryTime: 10,
+          discount: 28,
+          isPremium: true,
+        ),
+        Product(
+          name: 'Kinder Schoko Bons Crispy',
+          imageUrl: 'https://example.com/chocolate2.jpg',
+          price: 37,
+          mrp: 40,
+          weight: 22.4,
+          rating: 4.8,
+          reviewCount: 5690,
+          deliveryTime: 10,
+          discount: 7,
+        ),
+      ];
+
+      // Filter
+      final filters = [
+        Filter(label: 'Filter', value: 'filter', filterType: FilterType.dropdown),
+        Filter(label: 'Sort', value: 'sort', filterType: FilterType.dropdown),
+        Filter(label: 'Brand', value: 'brand', filterType: FilterType.normal),
+        Filter(label: 'More', value: 'more', filterType: FilterType.dropdown),
+      ];
+---
+
+## Demo
+
+```dart
+import 'package:flutter/material.dart';
+
+import 'majestic/ui/categories_page/categories_page.dart';
+
+class CategoriesPageDemo extends StatelessWidget {
+  const CategoriesPageDemo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const CategoriesPage();
+  }
+}
+
+// Or Navigate to this page
+class ParentPage extends StatelessWidget {
+  const ParentPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: TextButton(
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const CategoriesPage(),
+          ),
+        ),
+        child: const Text('Navigate'),
+      ),
+    );
+  }
+}
+```

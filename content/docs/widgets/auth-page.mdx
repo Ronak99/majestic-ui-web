@@ -1,0 +1,369 @@
+---
+title: |-
+  Auth Page
+description: |-
+  Authenticate your users in style.
+type: |-
+  widget
+preview_url: |-
+  https://majestic-flutter-web.web.app/#/auth_page
+cli: |-
+  majestic_ui add auth_page
+dependencies:
+  - |-
+    auto_size_text
+files:
+  - name: |-
+      colors.dart
+    path: |-
+      lib/majestic/ui/auth_page/colors.dart
+    language: |-
+      dart
+    code: |
+      import 'dart:ui';
+
+      const themeAccentColor = Color(0xffF04F5F);
+      const mutedForegroundColor = Color(0xffD4D4D4);
+  - name: |-
+      auth_page.dart
+    path: |-
+      lib/majestic/ui/auth_page/auth_page.dart
+    language: |-
+      dart
+    code: |
+      import 'package:auto_size_text/auto_size_text.dart';
+      import 'package:flutter/material.dart';
+
+      import './colors.dart';
+      import 'widgets/oauth_button.dart';
+      import 'widgets/section_separator.dart';
+
+      class AuthPage extends StatelessWidget {
+        const AuthPage({super.key});
+
+        @override
+        Widget build(BuildContext context) {
+          Widget header() {
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              height: MediaQuery.of(context).size.height * .45,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xffD9313E),
+                    Color(0xffA72734),
+                  ],
+                ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.network(
+                    'https://raw.githubusercontent.com/Ronak99/majestic-ui-flutter/refs/heads/master/assets/logo-small.png',
+                    height: 75,
+                    width: 75,
+                    fit: BoxFit.cover,
+                  ),
+                  const SizedBox(height: 12),
+                  const Text(
+                    'Majestic UI',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 32,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Beautifully designed Flutter widgets that you can copy and paste into your apps.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: mutedForegroundColor,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          Widget oAuthView() {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                OAuthButton(
+                  child: Image.network(
+                    'https://raw.githubusercontent.com/Ronak99/majestic-ui-flutter/refs/heads/master/assets/google-icon.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                OAuthButton(
+                  child: Image.network(
+                    'https://raw.githubusercontent.com/Ronak99/majestic-ui-flutter/refs/heads/master/assets/apple-icon.png',
+                    fit: BoxFit.contain,
+                  ),
+                )
+              ],
+            );
+          }
+
+          Widget phoneNumberFieldView() {
+            return Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: mutedForegroundColor,
+                        blurRadius: 2,
+                        offset: Offset.zero,
+                      ),
+                    ],
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: const TextField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Enter your phone number",
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black45,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Container(
+                  decoration: BoxDecoration(
+                    color: themeAccentColor,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    "Continue",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+
+          Widget footerView() {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('By continuing you agree to our'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    {
+                      "label": "Terms of Service",
+                      "onClick": () => {print("Tapped Terms of Service!")}
+                    },
+                    {
+                      "label": "Privacy Policy",
+                      "onClick": () => {print("Tapped Privacy Policy!")}
+                    },
+                    {
+                      "label": "Content Policy",
+                      "onClick": () => {print("Tapped Content Policy!")}
+                    }
+                  ]
+                      .map(
+                        (item) => Container(
+                          margin: const EdgeInsets.only(right: 6),
+                          child: GestureDetector(
+                            onTap: item["onClick"] as VoidCallback,
+                            child: Text(
+                              item["label"] as String,
+                              style: const TextStyle(
+                                decoration: TextDecoration.underline,
+                                decorationStyle: TextDecorationStyle.dashed,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ],
+            );
+          }
+
+          return Scaffold(
+            body: SizedBox(
+              width: double.infinity,
+              child: Column(
+                children: [
+                  header(),
+                  Flexible(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Your heading goes here
+                          const AutoSizeText(
+                            'Get ready for best in class Flutter widgets.',
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 24,
+                            ),
+                          ),
+
+                          // A simple section separator
+                          const SectionSeparator(text: 'Log in or sign up'),
+
+                          // Phone number field view, this can even be separated into a stateful widget
+                          phoneNumberFieldView(),
+
+                          // Section separator yet again.
+                          const SectionSeparator(text: "or"),
+
+                          // oAuth button row
+                          oAuthView(),
+                          const SizedBox(height: 16),
+
+                          // Simple Footer
+                          footerView(),
+                          const SizedBox(height: 8),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+      }
+  - name: |-
+      oauth_button.dart
+    path: |-
+      lib/majestic/ui/auth_page/widgets/oauth_button.dart
+    language: |-
+      dart
+    code: |
+      import '../colors.dart';
+      import 'package:flutter/material.dart';
+
+      class OAuthButton extends StatelessWidget {
+        final Widget child;
+        const OAuthButton({super.key, required this.child});
+
+        @override
+        Widget build(BuildContext context) {
+          return Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: mutedForegroundColor,
+                width: .5,
+              ),
+            ),
+            alignment: Alignment.center,
+            height: 60,
+            width: 60,
+            padding: const EdgeInsets.all(12),
+            child: child,
+          );
+        }
+      }
+  - name: |-
+      section_separator.dart
+    path: |-
+      lib/majestic/ui/auth_page/widgets/section_separator.dart
+    language: |-
+      dart
+    code: |
+      import '../colors.dart';
+      import 'package:flutter/material.dart';
+
+      class SectionSeparator extends StatelessWidget {
+        final String text;
+
+        const SectionSeparator({super.key, required this.text});
+
+        _separator() {
+          return Expanded(
+            child: Container(
+              height: .5,
+              color: mutedForegroundColor,
+            ),
+          );
+        }
+
+        @override
+        Widget build(BuildContext context) {
+          return Container(
+            margin: const EdgeInsets.symmetric(vertical: 20),
+            child: Row(
+              children: [
+                _separator(),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    text,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+                _separator(),
+              ],
+            ),
+          );
+        }
+      }
+---
+
+## Demo
+
+```dart
+import 'majestic/ui/auth_page/auth_page.dart';
+import 'package:flutter/material.dart';
+
+class AuthPageDemo extends StatelessWidget {
+  const AuthPageDemo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const AuthPage();
+  }
+}
+
+// Or Navigate to this page
+class ParentPage extends StatelessWidget {
+  const ParentPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: TextButton(
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const AuthPage(),
+          ),
+        ),
+        child: const Text('Navigate'),
+      ),
+    );
+  }
+}
+```

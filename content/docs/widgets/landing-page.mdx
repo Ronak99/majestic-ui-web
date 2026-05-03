@@ -1,0 +1,190 @@
+---
+title: |-
+  Landing Page
+description: |-
+  A landing page with Salomon Bottom Navigation bar and state management.
+type: |-
+  widget
+preview_url: |-
+  https://majestic-flutter-web.web.app/#/landing_page
+cli: |-
+  majestic_ui add landing_page
+dependencies:
+  - |-
+    provider
+  - |-
+    salomon_bottom_bar
+files:
+  - name: |-
+      landing_page.dart
+    path: |-
+      lib/majestic/ui/landing_page/landing_page.dart
+    language: |-
+      dart
+    code: |
+      import 'package:flutter/material.dart';
+      import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+      import 'package:provider/provider.dart';
+
+      import './provider/landing_page_state_provider.dart';
+      import './config/landing_page_config.dart';
+
+      class LandingPage extends StatelessWidget {
+        const LandingPage({super.key});
+
+        @override
+        Widget build(BuildContext context) {
+          return ChangeNotifierProvider(
+            create: (_) => LandingPageStateProvider(),
+            builder: (context, _) {
+              final landingPageProvider =
+                  Provider.of<LandingPageStateProvider>(context);
+
+              return Scaffold(
+                body: landingPageList[landingPageProvider.selectedIndex],
+                bottomNavigationBar: SalomonBottomBar(
+                  currentIndex: landingPageProvider.selectedIndex,
+                  onTap: landingPageProvider.onTabChange,
+                  items: [
+                    /// Home
+                    SalomonBottomBarItem(
+                      icon: const Icon(Icons.home),
+                      title: const Text("Home"),
+                      selectedColor: Colors.purple,
+                    ),
+
+                    /// Likes
+                    SalomonBottomBarItem(
+                      icon: const Icon(Icons.favorite_border),
+                      title: const Text("Likes"),
+                      selectedColor: Colors.pink,
+                    ),
+
+                    /// Search
+                    SalomonBottomBarItem(
+                      icon: const Icon(Icons.search),
+                      title: const Text("Search"),
+                      selectedColor: Colors.orange,
+                    ),
+
+                    /// Profile
+                    SalomonBottomBarItem(
+                      icon: const Icon(Icons.person),
+                      title: const Text("Profile"),
+                      selectedColor: Colors.teal,
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        }
+      }
+  - name: |-
+      landing_page_config.dart
+    path: |-
+      lib/majestic/ui/landing_page/config/landing_page_config.dart
+    language: |-
+      dart
+    code: |
+      import '../pages/home_page.dart';
+
+      /// This is where you are supposed to specify all of your pages.
+      const landingPageList = [
+        DemoPage(
+          title: "Home",
+          subtitle: "Home",
+        ),
+        DemoPage(
+          title: "Likes",
+          subtitle: "Likes",
+        ),
+        DemoPage(
+          title: "Search",
+          subtitle: "Search",
+        ),
+        DemoPage(
+          title: "Profile",
+          subtitle: "Profile",
+        ),
+      ];
+  - name: |-
+      landing_page_state_provider.dart
+    path: |-
+      lib/majestic/ui/landing_page/provider/landing_page_state_provider.dart
+    language: |-
+      dart
+    code: |
+      import 'package:flutter/material.dart';
+
+      class LandingPageStateProvider extends ChangeNotifier {
+        int _selectedIndex = 0;
+        int get selectedIndex => _selectedIndex;
+
+        void onTabChange(int i) {
+          _selectedIndex = i;
+          notifyListeners();
+        }
+      }
+  - name: |-
+      home_page.dart
+    path: |-
+      lib/majestic/ui/landing_page/pages/home_page.dart
+    language: |-
+      dart
+    code: |
+      import 'package:flutter/material.dart';
+
+      class DemoPage extends StatelessWidget {
+        final String title;
+        final String subtitle;
+        const DemoPage({super.key, required this.title, required this.subtitle});
+
+        @override
+        Widget build(BuildContext context) {
+          return Scaffold(
+            appBar: AppBar(centerTitle: true, title: Text(title)),
+            body: Center(
+              child: Text(subtitle),
+            ),
+          );
+        }
+      }
+---
+
+## Demo
+
+```dart
+import 'package:flutter/material.dart';
+
+import 'majestic/ui/landing_page/landing_page.dart';
+
+class LandingPageDemo extends StatelessWidget {
+  const LandingPageDemo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const LandingPage();
+  }
+}
+
+// Or Navigate to this page
+class ParentPage extends StatelessWidget {
+  const ParentPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: TextButton(
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LandingPage(),
+          ),
+        ),
+        child: const Text('Navigate'),
+      ),
+    );
+  }
+}
+```
